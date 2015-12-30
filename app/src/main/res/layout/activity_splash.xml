@@ -1,0 +1,213 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.khaldane.masterdetailapp.Splash"
+    android:background="@drawable/shop_items_600">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/black_gradient"/>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/black_gradient"/>
+
+    <!-- About App -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
+
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="150dp"
+            android:layout_height="70dp"
+            android:background="@drawable/logo_white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            />
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_below="@id/ivLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/welcome"
+            android:gravity="center_horizontal"
+            android:textAppearance="@android:style/TextAppearance.Large"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:layout_marginBottom="5dp"/>
+
+        <TextView
+            android:id="@+id/tvAboutApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/about"
+            android:gravity="center_horizontal"
+            android:layout_below="@+id/tvWelcome"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/white"/>
+
+        <LinearLayout
+            android:id="@+id/llFeatures"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_below="@+id/tvAboutApp"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <!-- Search for Items -->
+                <ImageView
+                    android:id="@+id/ivAboutSearch"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/search_icon"
+                    android:contentDescription="@string/search_icon"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/tvAboutSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_search"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <!-- View Item Details -->
+                <ImageView
+                    android:id="@+id/ivAboutItems"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/item"
+                    android:layout_gravity="center_vertical"
+                    android:contentDescription="@string/search_icon"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="3dp"/>
+
+                <TextView
+                    android:id="@+id/tvAboutItems"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_item"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:layout_below="@+id/llFeatures"
+            android:baselineAligned="false">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <!-- Search for Items -->
+                <ImageView
+                    android:id="@+id/ivAboutUser"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:background="@drawable/user"
+                    android:contentDescription="@string/search_icon"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginEnd="10dp" />
+
+                <TextView
+                    android:id="@+id/tvAboutUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/about_user"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="10dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlBottomLine"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#20ffffff"
+        android:layout_above="@+id/llLoading"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/llLoading"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:id="@+id/tvLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading_items"
+            android:textSize="12sp"
+            android:textColor="@color/off_white"
+            android:textStyle="bold"/>
+
+        <ProgressBar
+            android:id="@+id/pbLoading"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/ivGetStarted"
+            android:visibility="gone"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:padding="10dp"
+            android:background="@drawable/user"
+            android:contentDescription="@string/search_icon"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
