@@ -1,5 +1,8 @@
 package com.khaldane.masterdetailapp;
 
+import android.content.Context;
+
+import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.EndpointContainers.Etsy;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
 
@@ -18,18 +21,28 @@ public class RetrofitCalls {
     static final Etsy sService = adapter.create(Etsy.class);
 
 
-    public static ListingDetails getFeaturedListings() {
+    public static ListingDetails getFeaturedListings(int page, Context c) {
+        Gson gson = Utility.gsonBuilder();
+        ListingDetails featured = sService.getFeaturedListings(page);
+        Utility.saveToSharedPreferences("featured", gson.toJson(featured), c);
 
-        return sService.getFeaturedListings();
+        return featured;
     }
 
-    public static ListingDetails getTrendingListings() {
+    public static ListingDetails getTrendingListings(int page, Context c) {
+        Gson gson = Utility.gsonBuilder();
+        ListingDetails trending = sService.getTrendingListings(page);
+        Utility.saveToSharedPreferences("trending", gson.toJson(trending), c);
 
-        return sService.getTrendingListings();
+        return trending;
     }
 
-    public static ListingDetails getActiveListings() {
+    public static ListingDetails getActiveListings(int page, Context c) {
+        Gson gson = Utility.gsonBuilder();
+        ListingDetails active = sService.getActiveListings(page);
+        Utility.saveToSharedPreferences("active", gson.toJson(active), c);
 
-        return sService.getActiveListings();
+        return active;
     }
+
 }

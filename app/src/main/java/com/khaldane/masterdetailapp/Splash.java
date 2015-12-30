@@ -13,16 +13,12 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
 
 
 public class Splash extends AppCompatActivity {
 
     AsyncTask featuredTask, trendingTask, activeTask;
-
-    ListingDetails featuredListings, trendingListings, activeListings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +68,11 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetails doInBackground(Void... params) {
-            return RetrofitCalls.getFeaturedListings();
+            return RetrofitCalls.getFeaturedListings(1, Splash.this);
         }
 
         @Override
         protected void onPostExecute(ListingDetails results) {
-            featuredListings = results;
 
             updateLoadingStatus(true
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
@@ -89,12 +84,11 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetails doInBackground(Void... params) {
-            return RetrofitCalls.getTrendingListings();
+            return RetrofitCalls.getTrendingListings(1, Splash.this);
         }
 
         @Override
         protected void onPostExecute(ListingDetails results) {
-            trendingListings = results;
 
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
@@ -106,12 +100,11 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetails doInBackground(Void... params) {
-            return RetrofitCalls.getActiveListings();
+            return RetrofitCalls.getActiveListings(1, Splash.this);
         }
 
         @Override
         protected void onPostExecute(ListingDetails results) {
-            activeListings = results;
 
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
                     , true
@@ -135,14 +128,7 @@ public class Splash extends AppCompatActivity {
             llLoading.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    GsonBuilder builder = new GsonBuilder();
-                    builder.serializeNulls();
-                    Gson gson = builder.create();
-
                     Intent intent = new Intent(Splash.this, Main.class);
-                    intent.putExtra("featured", gson.toJson(featuredListings));
-                    intent.putExtra("trending", gson.toJson(trendingListings));
-                    intent.putExtra("active", gson.toJson(activeListings));
                     startActivity(intent);
                 }
             });

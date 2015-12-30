@@ -71,13 +71,7 @@ public class Main extends AppCompatActivity {
 
         });
 
-        //Get the bundle
-        Bundle extras = getIntent().getExtras();
-        String featured = extras.getString("featured", "");
-        String trending = extras.getString("trending", "");
-        String active = extras.getString("active", "");
-
-        //Populate Listviews
+        //Populate the listviews
 
     }
 
