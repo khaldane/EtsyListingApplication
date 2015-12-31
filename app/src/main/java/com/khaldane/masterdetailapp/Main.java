@@ -17,10 +17,6 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //hide the actionbar
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
         populateTabs();
 
     }

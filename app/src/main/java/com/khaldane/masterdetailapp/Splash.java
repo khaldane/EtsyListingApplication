@@ -29,10 +29,6 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        //hide the actionbar
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
         //Check if the user has internet
         if(isNetworkAvailable()) {
             //Run asynctasks simultaneously
@@ -87,8 +83,8 @@ public class Splash extends AppCompatActivity {
         protected void onPostExecute(ListingDetails results) {
 
             updateLoadingStatus(true
-                    , activeTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
-                    , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false);
+                    , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
+                    , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED));
         }
     }
 
@@ -102,8 +98,8 @@ public class Splash extends AppCompatActivity {
         @Override
         protected void onPostExecute(ListingDetails results) {
 
-            updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
-                    , activeTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
+            updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
+                    , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , true);
         }
     }
@@ -118,9 +114,9 @@ public class Splash extends AppCompatActivity {
         @Override
         protected void onPostExecute(ListingDetails results) {
 
-            updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false
+            updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , true
-                    , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED) ? true : false);
+                    , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED));
 
         }
     }

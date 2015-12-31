@@ -5,9 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-/**
- * Created by Kat on 15-12-28.
- */
+
 public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
     Context context;
     String icons[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created

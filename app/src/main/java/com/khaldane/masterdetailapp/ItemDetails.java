@@ -13,10 +13,6 @@ public class ItemDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
 
-        //hide the actionbar
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-
     }
 
     @Override

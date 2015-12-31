@@ -1,5 +1,6 @@
 package com.khaldane.masterdetailapp.ItemsFragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,11 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.khaldane.masterdetailapp.Adapters.ItemDetailArrayAdapter;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
+import com.khaldane.masterdetailapp.ItemDetails;
 import com.khaldane.masterdetailapp.R;
 import com.khaldane.masterdetailapp.Utility;
 
@@ -21,9 +23,7 @@ public class Featured extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v =inflater.inflate(R.layout.fragment_featured,container,false);
-
-        return v;
+        return inflater.inflate(R.layout.fragment_featured,container,false);
     }
 
     @Override
@@ -38,24 +38,25 @@ public class Featured extends Fragment {
     private void populateFeatured(ListingDetails featured) {
 
         final TextView tvNoResults = (TextView) getActivity().findViewById(R.id.tvNoResults);
-        final ListView lvFeatured = (ListView) getView().findViewById(R.id.lvFeatured);
+        final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
 
         if(featured.getResults().length > 0) {
-            lvFeatured.setVisibility(View.VISIBLE);
+            gvFeatured.setVisibility(View.VISIBLE);
             tvNoResults.setVisibility(View.GONE);
 
-            ItemDetailArrayAdapter featuredArrayAdapter = new ItemDetailArrayAdapter(getActivity(), R.layout.listview_item, Arrays.asList(featured.getResults()));
-            lvFeatured.setItemsCanFocus(false);
-            lvFeatured.setAdapter(featuredArrayAdapter);
+            gvFeatured.setAdapter(new ItemDetailArrayAdapter(getActivity(), R.layout.listview_item, Arrays.asList(featured.getResults())));;
 
-            lvFeatured.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            gvFeatured.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //Go to detailed view
+                    Intent intent = new Intent(getActivity(), ItemDetails.class);
+                    startActivity(intent);
                 }
             });
+
         } else {
-            lvFeatured.setVisibility(View.GONE);
+            gvFeatured.setVisibility(View.GONE);
             tvNoResults.setVisibility(View.VISIBLE);
         }
     }
