@@ -1,6 +1,9 @@
 package com.khaldane.masterdetailapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
 
@@ -29,15 +33,23 @@ public class Splash extends AppCompatActivity {
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        //Run asynctasks simultaneously
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            trendingTask = new GetTrendingListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            activeTask = new GetActiveListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            featuredTask = new GetFeaturedListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        //Check if the user has internet
+        if(isNetworkAvailable()) {
+            //Run asynctasks simultaneously
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                trendingTask = new GetTrendingListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                activeTask = new GetActiveListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                featuredTask = new GetFeaturedListings().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            } else {
+                featuredTask = new GetFeaturedListings().execute();
+                trendingTask = new GetTrendingListings().execute();
+                activeTask = new GetActiveListings().execute();
+            }
         } else {
-            featuredTask = new GetFeaturedListings().execute();
-            trendingTask = new GetTrendingListings().execute();
-            activeTask = new GetActiveListings().execute();
+            Toast.makeText(this, "Please turn network connection on to view listings",
+                    Toast.LENGTH_LONG).show();
+
+            updateLoadingStatus(true, true, true);
         }
 
     }
@@ -133,5 +145,12 @@ public class Splash extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
