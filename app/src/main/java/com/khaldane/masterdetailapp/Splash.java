@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -129,8 +131,10 @@ public class Splash extends AppCompatActivity {
             ProgressBar pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
             pbLoading.setVisibility(View.GONE);
 
-            ImageView ivGetStarted = (ImageView) findViewById(R.id.ivGetStarted);
-            ivGetStarted.setVisibility(View.VISIBLE);
+            ImageView ivGetStartedArrow = (ImageView) findViewById(R.id.ivGetStartedArrow);
+            ivGetStartedArrow.setVisibility(View.VISIBLE);
+
+            arrowAnimation();
 
             LinearLayout llLoading = (LinearLayout) findViewById(R.id.llLoading);
             llLoading.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +145,31 @@ public class Splash extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    private void arrowAnimation() {
+        final ImageView ivGetStartedArrow = (ImageView) findViewById(R.id.ivGetStartedArrow);
+        final Animation slideAnimation = AnimationUtils.loadAnimation(this, R.anim.slide);
+
+        slideAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                slideAnimation.setAnimationListener(this);
+                ivGetStartedArrow.startAnimation(slideAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        ivGetStartedArrow.startAnimation(slideAnimation);
     }
 
     private boolean isNetworkAvailable() {
