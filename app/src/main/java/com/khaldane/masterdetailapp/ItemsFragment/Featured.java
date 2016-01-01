@@ -40,7 +40,7 @@ public class Featured extends Fragment {
         final TextView tvNoResults = (TextView) getActivity().findViewById(R.id.tvNoResults);
         final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
 
-        if(featured.getResults().length > 0) {
+        if(featured.getCount() > 0) {
             gvFeatured.setVisibility(View.VISIBLE);
             tvNoResults.setVisibility(View.GONE);
 

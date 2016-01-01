@@ -29,8 +29,12 @@ public class Utility {
     }
 
     public static ListingDetails parseListingDetails(String parse) {
-        Gson gson = new Gson();
-        JsonObject t = (new JsonParser()).parse(parse).getAsJsonObject();
-        return gson.fromJson(t, ListingDetails.class);
+        if(parse.equals("")) {
+            return new ListingDetails();
+        } else {
+            Gson gson = new Gson();
+            JsonObject t = (new JsonParser()).parse(parse).getAsJsonObject();
+            return gson.fromJson(t, ListingDetails.class);
+        }
     }
 }
