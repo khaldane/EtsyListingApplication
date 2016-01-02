@@ -36,12 +36,14 @@ public class ItemDetails extends AppCompatActivity {
 
 
         //Populate overview
+        TextView tvTitleBody = (TextView) findViewById(R.id.tvTitleBody);
         TextView tvQuantityNum = (TextView) findViewById(R.id.tvQuantityNum);
         TextView tvFavoriteNum = (TextView) findViewById(R.id.tvFavoriteNum);
         TextView tvViewNum = (TextView) findViewById(R.id.tvViewNum);
         TextView tvTagBody = (TextView) findViewById(R.id.tvTagBody);
         TextView tvMaterialBody = (TextView) findViewById(R.id.tvMaterialBody);
 
+        tvTitleBody.setText(item.getTitle());
         tvQuantityNum.setText(Integer.toString(item.getQuantity()));
         tvFavoriteNum.setText(Integer.toString(item.getNum_favorers()));
         tvViewNum.setText(Integer.toString(item.getViews()));

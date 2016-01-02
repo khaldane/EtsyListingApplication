@@ -35,4 +35,5 @@
     <string name="zero">0</string>
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="view_shop">VIEW SHOP</string>
+    <string name="item_name">ITEM NAME</string>
 </resources>

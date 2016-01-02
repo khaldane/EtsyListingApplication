@@ -21,14 +21,31 @@
         android:layout_height="match_parent"
         android:layout_margin="10dp">
 
-        <GridView
-            android:id="@+id/gvFeatured"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:numColumns="2" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <GridView
+                android:id="@+id/gvFeatured"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:numColumns="2"
+                android:layout_above="@+id/pbLoadingFeatures"
+                />
+
+            <ProgressBar
+                android:id="@+id/pbLoadingFeatures"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"/>
+
+        </RelativeLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

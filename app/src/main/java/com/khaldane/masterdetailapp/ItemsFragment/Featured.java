@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -85,8 +86,9 @@ public class Featured extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
             {
                 int topRowVerticalPosition = (gvFeatured == null || gvFeatured.getChildCount() == 0) ? 0 : gvFeatured.getChildAt(0).getTop();
+                int vH = view.getHeight();
 
-                //Swiped past the top
+                //Swiped to top of the gridview
                 if(firstVisibleItem == 0 && topRowVerticalPosition >= 0) {
                     if(!loadingStart) {
                         loadingStart = true;
@@ -94,10 +96,10 @@ public class Featured extends Fragment {
                     }
                 }
 
-                //Swiped past the bottom
-                if(firstVisibleItem + visibleItemCount >= totalItemCount){
-                    // End has been reached
-                    if(!loadingEnd) {
+                //Swiped to the bottom of gridview
+                if(firstVisibleItem + visibleItemCount == totalItemCount){
+                    int bottomPos = view.getChildAt(visibleItemCount - 1).getBottom();
+                    if(!loadingEnd && vH >= bottomPos) {
                         loadingEnd = true;
                         new GetMoreFeaturedListings().execute();
                     }
@@ -137,10 +139,11 @@ public class Featured extends Fragment {
     class GetMoreFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
+        final ProgressBar pbLoadingFeatures = (ProgressBar) getView().findViewById(R.id.pbLoadingFeatures);
 
         @Override
         protected void onPreExecute() {
-            //Show loading at bottom of the page
+            pbLoadingFeatures.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -156,6 +159,7 @@ public class Featured extends Fragment {
 
             featuredAdapter.refresh(featured.getResults());
             loadingEnd = false;
+            pbLoadingFeatures.setVisibility(View.GONE);
             swipeContainer.setRefreshing(false);
         }
     }
