@@ -1,5 +1,7 @@
 package com.khaldane.masterdetailapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,10 +9,15 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.khaldane.masterdetailapp.EndpointContainers.Results;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 
 
 public class ItemDetails extends AppCompatActivity {
@@ -24,16 +31,33 @@ public class ItemDetails extends AppCompatActivity {
         Bundle mBundle = getIntent().getExtras();
         String itemDetails = mBundle.getString("itemDetails", "");
 
-        Results item = Utility.parseResults(itemDetails);
+        final Results item = Utility.parseResults(itemDetails);
 
         //Populate general details
-        RelativeLayout rlItemImg = (RelativeLayout) findViewById(R.id.rlItemImg);
+        final ImageView ivItemImg = (ImageView) findViewById(R.id.ivItemImg);
         TextView tvItemTitle = (TextView) findViewById(R.id.tvItemTitle);
         TextView tvPrice = (TextView) findViewById(R.id.tvPrice);
 
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    final Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(item.getMainImage().getUrl_570xN()).getContent());
+
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            ivItemImg.setImageBitmap(bitmap);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }).start();
+
         tvItemTitle.setText(Html.fromHtml(item.getTitle()));
         tvPrice.setText("$" + item.getPrice());
-
 
         //Populate overview
         TextView tvTitleBody = (TextView) findViewById(R.id.tvTitleBody);

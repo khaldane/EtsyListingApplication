@@ -3,11 +3,15 @@ package com.khaldane.masterdetailapp.Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,6 +19,9 @@ import com.khaldane.masterdetailapp.EndpointContainers.Results;
 import com.khaldane.masterdetailapp.R;
 import com.khaldane.masterdetailapp.ShopDetails;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
 
 public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
@@ -38,6 +45,7 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             item = inflater.inflate(layoutResourceId, parent, false);
             Wrapper = new Lead();
+            Wrapper.mainImage = (ImageView) item.findViewById(R.id.tvMainImage);
             Wrapper.title = (TextView) item.findViewById(R.id.tvItemTitle);
             Wrapper.price = (TextView) item.findViewById(R.id.tvPrice);
             Wrapper.shop = (RelativeLayout) item.findViewById(R.id.rlUserShop);
@@ -46,22 +54,40 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
             Wrapper = (Lead) item.getTag();
         }
 
-        Results a = results.get(position);
+        final Results a = results.get(position);
 
-        try {
-            Wrapper.title.setText(Html.fromHtml(a.getTitle()));
-            Wrapper.price.setText("$" + a.getPrice());
+        final Lead finalWrapper = Wrapper;
 
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    final Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(a.getMainImage().getUrl_170x135()).getContent());
 
-            Wrapper.shop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, ShopDetails.class);
-                    intent.putExtra("userId", position);
-                    context.startActivity(intent);
+                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
+                        public void run() {
+                            finalWrapper.mainImage.setImageBitmap(bitmap);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
-        } catch (NullPointerException ex) {}
+            }
+
+        }).start();
+
+        Wrapper.title.setText(Html.fromHtml(a.getTitle()));
+        Wrapper.price.setText("$" + a.getPrice());
+
+
+        Wrapper.shop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ShopDetails.class);
+                intent.putExtra("userId", position);
+                context.startActivity(intent);
+            }
+        });
 
         return item;
     }
@@ -72,6 +98,7 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
     }
 
     static class Lead {
+        ImageView mainImage;
         TextView title;
         TextView price;
         RelativeLayout shop;

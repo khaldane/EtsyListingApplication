@@ -12,13 +12,19 @@
         android:id="@+id/rlItemImg"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"
-        android:background="@drawable/shop_item">
+        android:layout_weight="1.2">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/ivItemImg"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@drawable/black_gradient"/>
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"/>
+
+        <!--<RelativeLayout-->
+            <!--android:layout_width="fill_parent"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:background="@drawable/light_gradient"/>-->
 
     </RelativeLayout>
 

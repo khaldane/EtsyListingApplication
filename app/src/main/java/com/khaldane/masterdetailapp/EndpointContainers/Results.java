@@ -15,16 +15,16 @@ public class Results {
     String currency_mode;
     int views;
     int num_favorers;
-
     int quantity;
     String tags[];
     String materials[];
     String url;
+    ListingImage MainImage;
 
     public Results() {
     }
 
-    public Results(int listing_id, String state, int user_id, int category_id, String title, String description, String price, String currency_mode, int quantity, String[] tags, String[] materials, String url, int views, int num_favorers) {
+    public Results(int listing_id, String state, int user_id, int category_id, String title, String description, String price, String currency_mode, int quantity, String[] tags, String[] materials, String url, int views, int num_favorers, ListingImage MainImage) {
         this.listing_id = listing_id;
         this.state = state;
         this.user_id = user_id;
@@ -39,6 +39,7 @@ public class Results {
         this.url = url;
         this.views = views;
         this.num_favorers = num_favorers;
+        this.MainImage = MainImage;
     }
 
     public int getListing_id() {
@@ -151,5 +152,13 @@ public class Results {
 
     public void setNum_favorers(int num_favorers) {
         this.num_favorers = num_favorers;
+    }
+
+    public ListingImage getMainImage() {
+        return MainImage;
+    }
+
+    public void setMainImage(ListingImage mainImage) {
+        this.MainImage = mainImage;
     }
 }

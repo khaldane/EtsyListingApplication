@@ -80,6 +80,12 @@ public class Featured extends Fragment {
     }
 
     private void handlers() {
+
+
+        SwipeRefreshLayout sc = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
+        sc.setEnabled(false);
+
+
         final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
         gvFeatured.setOnScrollListener(new AbsListView.OnScrollListener(){
             @Override
