@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -136,8 +136,8 @@ public class Splash extends AppCompatActivity {
 
             arrowAnimation();
 
-            LinearLayout llLoading = (LinearLayout) findViewById(R.id.llLoading);
-            llLoading.setOnClickListener(new View.OnClickListener() {
+            RelativeLayout rlLoading = (RelativeLayout) findViewById(R.id.rlLoading);
+            rlLoading.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Splash.this, Main.class);
@@ -160,6 +160,7 @@ public class Splash extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 slideAnimation.setAnimationListener(this);
+                slideAnimation.setStartOffset(300);
                 ivGetStartedArrow.startAnimation(slideAnimation);
             }
 

@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import com.khaldane.masterdetailapp.EndpointContainers.Results;
+import com.khaldane.masterdetailapp.R;
 
 import java.util.List;
 
@@ -32,23 +34,22 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
             item = inflater.inflate(layoutResourceId, parent, false);
             Wrapper = new Lead();
-//            Wrapper.date = (TextView) item.findViewById(R.id.tvDate);
-//            Wrapper.time = (TextView) item.findViewById(R.id.tvTimInMin);
-//            Wrapper.activity = (TextView) item.findViewById(R.id.tvActivity);
+            Wrapper.title = (TextView) item.findViewById(R.id.tvItemTitle);
+            Wrapper.price = (TextView) item.findViewById(R.id.tvPrice);
             item.setTag(Wrapper);
         } else {
             Wrapper = (Lead) item.getTag();
         }
 
         Results a = results.get(position);
-        //Wrapper.activity.setText("None");
+        Wrapper.title.setText(a.getTitle());
+        Wrapper.price.setText("$" + a.getPrice());
 
         return item;
     }
 
     static class Lead {
-//        TextView date;
-//        TextView time;
-//        TextView activity;
+        TextView title;
+        TextView price;
     }
 }

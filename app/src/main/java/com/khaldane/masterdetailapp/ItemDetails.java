@@ -1,9 +1,15 @@
 package com.khaldane.masterdetailapp;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.khaldane.masterdetailapp.EndpointContainers.Results;
 
 
 public class ItemDetails extends AppCompatActivity {
@@ -12,6 +18,40 @@ public class ItemDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
+
+        //Get the bundle
+        Bundle mBundle = getIntent().getExtras();
+        String itemDetails = mBundle.getString("itemDetails", "");
+
+        Results item = Utility.parseResults(itemDetails);
+
+        //Populate general details
+        RelativeLayout rlItemImg = (RelativeLayout) findViewById(R.id.rlItemImg);
+        TextView tvItemTitle = (TextView) findViewById(R.id.tvItemTitle);
+        TextView tvPrice = (TextView) findViewById(R.id.tvPrice);
+
+        tvItemTitle.setText(item.getTitle());
+        tvPrice.setText("$" + item.getPrice());
+
+
+        //Populate overview
+        TextView tvQuantityNum = (TextView) findViewById(R.id.tvQuantityNum);
+        TextView tvFavoriteNum = (TextView) findViewById(R.id.tvFavoriteNum);
+        TextView tvViewNum = (TextView) findViewById(R.id.tvViewNum);
+        TextView tvTagBody = (TextView) findViewById(R.id.tvTagBody);
+        TextView tvMaterialBody = (TextView) findViewById(R.id.tvMaterialBody);
+
+        tvQuantityNum.setText(Integer.toString(item.getQuantity()));
+        tvFavoriteNum.setText(Integer.toString(item.getNum_favorers()));
+        tvViewNum.setText(Integer.toString(item.getViews()));
+        tvTagBody.setText(Utility.parseArray(item.getTags()));
+        tvMaterialBody.setText(Utility.parseArray(item.getMaterials()));
+
+        //Populate item description
+        TextView tvItemDescBody = (TextView) findViewById(R.id.tvItemDescBody);
+        tvItemDescBody.setText(item.getDescription());
+
+        handlers();
 
     }
 
@@ -35,5 +75,55 @@ public class ItemDetails extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void handlers() {
+
+        RelativeLayout rlOverviewBtn = (RelativeLayout) findViewById(R.id.rlOverviewBtn);
+        RelativeLayout rlItemDescBtn = (RelativeLayout) findViewById(R.id.rlItemDescBtn);
+
+        final RelativeLayout rlOverviewAccent = (RelativeLayout) findViewById(R.id.rlOverviewAccent);
+        final RelativeLayout rlItemDescAccent = (RelativeLayout) findViewById(R.id.rlItemDescAccent);
+
+        final TextView tvOverviewHeader = (TextView) findViewById(R.id.tvOverviewHeader);
+        final TextView tvItemDescHeader = (TextView) findViewById(R.id.tvItemDescHeader);
+
+        final RelativeLayout rlOverview = (RelativeLayout) findViewById(R.id.rlOverview);
+        final TextView tvItemDescBody = (TextView) findViewById(R.id.tvItemDescBody);
+
+        rlOverviewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlOverviewAccent.setVisibility(View.VISIBLE);
+                rlItemDescAccent.setVisibility(View.GONE);
+
+                tvOverviewHeader.setTypeface(Typeface.DEFAULT_BOLD);
+                tvItemDescHeader.setTypeface(Typeface.DEFAULT);
+
+                tvOverviewHeader.setTextColor(getResources().getColor(R.color.black));
+                tvItemDescHeader.setTextColor(getResources().getColor(R.color.text_primary_gray));
+
+                rlOverview.setVisibility(View.VISIBLE);
+                tvItemDescBody.setVisibility(View.GONE);
+            }
+        });
+
+        rlItemDescBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rlOverviewAccent.setVisibility(View.GONE);
+                rlItemDescAccent.setVisibility(View.VISIBLE);
+
+                tvOverviewHeader.setTypeface(Typeface.DEFAULT);
+                tvItemDescHeader.setTypeface(Typeface.DEFAULT_BOLD);
+
+                tvOverviewHeader.setTextColor(getResources().getColor(R.color.text_primary_gray));
+                tvItemDescHeader.setTextColor(getResources().getColor(R.color.black));
+
+                rlOverview.setVisibility(View.GONE);
+                tvItemDescBody.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 }

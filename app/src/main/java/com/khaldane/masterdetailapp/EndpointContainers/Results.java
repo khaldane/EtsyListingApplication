@@ -13,6 +13,9 @@ public class Results {
     String description;
     String price;
     String currency_mode;
+    int views;
+    int num_favorers;
+
     int quantity;
     String tags[];
     String materials[];
@@ -21,7 +24,7 @@ public class Results {
     public Results() {
     }
 
-    public Results(int listing_id, String state, int user_id, int category_id, String title, String description, String price, String currency_mode, int quantity, String[] tags, String[] materials, String url) {
+    public Results(int listing_id, String state, int user_id, int category_id, String title, String description, String price, String currency_mode, int quantity, String[] tags, String[] materials, String url, int views, int num_favorers) {
         this.listing_id = listing_id;
         this.state = state;
         this.user_id = user_id;
@@ -34,6 +37,8 @@ public class Results {
         this.tags = tags;
         this.materials = materials;
         this.url = url;
+        this.views = views;
+        this.num_favorers = num_favorers;
     }
 
     public int getListing_id() {
@@ -130,5 +135,21 @@ public class Results {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
+    public int getNum_favorers() {
+        return num_favorers;
+    }
+
+    public void setNum_favorers(int num_favorers) {
+        this.num_favorers = num_favorers;
     }
 }

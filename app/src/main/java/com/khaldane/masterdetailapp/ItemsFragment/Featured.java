@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.Adapters.ItemDetailArrayAdapter;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
 import com.khaldane.masterdetailapp.ItemDetails;
@@ -35,7 +36,7 @@ public class Featured extends Fragment {
 
     }
 
-    private void populateFeatured(ListingDetails featured) {
+    private void populateFeatured(final ListingDetails featured) {
 
         final TextView tvNoResults = (TextView) getActivity().findViewById(R.id.tvNoResults);
         final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
@@ -50,7 +51,10 @@ public class Featured extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     //Go to detailed view
+                    Gson gson = Utility.gsonBuilder();
+
                     Intent intent = new Intent(getActivity(), ItemDetails.class);
+                    intent.putExtra("itemDetails", gson.toJson(featured.getResults()[position]));
                     startActivity(intent);
                 }
             });

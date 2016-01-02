@@ -4,8 +4,7 @@
     <translate
         android:fromXDelta="-20%" android:toXDelta="0%"
         android:fromYDelta="0%" android:toYDelta="0%"
-        android:duration="700"
-        android:repeatMode="reverse"/>
+        android:duration="700"/>
 
     <translate
         android:startOffset="500"

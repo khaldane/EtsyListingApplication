@@ -9,6 +9,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
+import com.khaldane.masterdetailapp.EndpointContainers.Results;
 
 public class Utility {
 
@@ -35,6 +36,29 @@ public class Utility {
             Gson gson = new Gson();
             JsonObject t = (new JsonParser()).parse(parse).getAsJsonObject();
             return gson.fromJson(t, ListingDetails.class);
+        }
+    }
+
+    public static Results parseResults (String parse) {
+        if(parse.equals("")) {
+            return new Results();
+        } else {
+            Gson gson = new Gson();
+            JsonObject t = (new JsonParser()).parse(parse).getAsJsonObject();
+            return gson.fromJson(t, Results.class);
+        }
+    }
+
+    public static String parseArray (String[] arr) {
+        StringBuilder builder = new StringBuilder();
+            if(arr != null) {
+            for (String s : arr) {
+                builder.append(s.substring(0, 1).toUpperCase() + s.substring(1));
+                builder.append(", ");
+            }
+            return builder.length() > 0 ? builder.substring(0, builder.length() - 2): "";
+        } else {
+            return "none";
         }
     }
 }
