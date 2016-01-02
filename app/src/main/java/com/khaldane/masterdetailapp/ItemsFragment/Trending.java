@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.Utility;
 
 public class Trending extends Fragment {
 
@@ -26,7 +25,7 @@ public class Trending extends Fragment {
         super.onCreate(savedInstanceState);
 
         String SHARED_PREFS = "com.khaldane.masterdetailapp";
-        populateTrending(Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString("trending", "")));
+        //populateTrending(Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString("trending", "")));
 
     }
 

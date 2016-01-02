@@ -28,7 +28,6 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:background="@color/white"
             android:paddingLeft="55dp"
-            android:paddingStart="55dp"
             android:paddingRight="0dp"
             android:paddingEnd="0dp"
             android:paddingTop="15dp"
@@ -38,8 +37,7 @@
             android:singleLine="true"
             android:textColor="@color/text_primary_gray"
             android:textColorHint="@color/text_secondary_gray"
-            android:imeOptions="actionSend"
-            tools:ignore="NewApi,RtlCompat" />
+            android:imeOptions="actionSend" />
 
         <LinearLayout
             android:id="@+id/llSearchBtn"

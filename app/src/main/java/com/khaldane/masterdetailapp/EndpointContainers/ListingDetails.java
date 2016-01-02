@@ -2,23 +2,13 @@ package com.khaldane.masterdetailapp.EndpointContainers;
 
 
 public class ListingDetails {
-    int count;
     Results[] results;
 
     public ListingDetails() {
     }
 
-    public ListingDetails(int count, Results[] results) {
-        this.count = count;
+    public ListingDetails(Results[] results) {
         this.results = results;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public Results[] getResults() {

@@ -7,7 +7,7 @@ import retrofit.http.Query;
 public interface Etsy {
 
     //Get Featured Listings - https://openapi.etsy.com/v2/featured_treasuries/listings/homepage_current?api_key=sifux1jmywuercksb4d8cdum
-    @GET("/v2/featured_treasuries/listings/homepage_current?api_key=sifux1jmywuercksb4d8cdum")
+    @GET("/v2/featured_treasuries/listings/?api_key=sifux1jmywuercksb4d8cdum")
     ListingDetails getFeaturedListings(@Query("page") int page);
     //void getFeaturedListings(Callback<ListingDetails> response);
 

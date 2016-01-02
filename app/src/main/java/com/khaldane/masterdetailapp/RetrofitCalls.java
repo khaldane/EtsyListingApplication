@@ -5,6 +5,10 @@ import android.content.Context;
 import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.EndpointContainers.Etsy;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
+import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
+import com.khaldane.masterdetailapp.EndpointContainers.Results;
+
+import java.util.ArrayList;
 
 import retrofit.RestAdapter;
 
@@ -21,28 +25,37 @@ public class RetrofitCalls {
     static final Etsy sService = adapter.create(Etsy.class);
 
 
-    public static ListingDetails getFeaturedListings(int page, Context c) {
+    public static ListingDetailsDisplay getFeaturedListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
         ListingDetails featured = sService.getFeaturedListings(page);
-        Utility.saveToSharedPreferences("featured", gson.toJson(featured), c);
+        ListingDetailsDisplay featuredDisplay = new ListingDetailsDisplay();
+        ArrayList<Results> containsNulls = Utility.stripNulls(featured.getResults());
+        featuredDisplay.setResults(containsNulls);
+        Utility.saveToSharedPreferences("featured", gson.toJson(featuredDisplay), c);
 
-        return featured;
+        return featuredDisplay;
     }
 
-    public static ListingDetails getTrendingListings(int page, Context c) {
+    public static ListingDetailsDisplay getTrendingListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
+        ListingDetailsDisplay trendingDisplay = new ListingDetailsDisplay();
         ListingDetails trending = sService.getTrendingListings(page);
-        Utility.saveToSharedPreferences("trending", gson.toJson(trending), c);
+        ArrayList<Results>  containsNulls = Utility.stripNulls(trending.getResults());
+        trendingDisplay.setResults(containsNulls);
+        Utility.saveToSharedPreferences("trending", gson.toJson(trendingDisplay), c);
 
-        return trending;
+        return trendingDisplay;
     }
 
-    public static ListingDetails getActiveListings(int page, Context c) {
+    public static ListingDetailsDisplay getActiveListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
         ListingDetails active = sService.getActiveListings(page);
-        Utility.saveToSharedPreferences("active", gson.toJson(active), c);
+        ListingDetailsDisplay activeDisplay = new ListingDetailsDisplay();
+        ArrayList<Results>  containsNulls = Utility.stripNulls(active.getResults());
+        activeDisplay.setResults(containsNulls);
+        Utility.saveToSharedPreferences("active", gson.toJson(activeDisplay), c);
 
-        return active;
+        return activeDisplay;
     }
 
 }

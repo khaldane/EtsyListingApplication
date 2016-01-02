@@ -11,11 +11,7 @@
         app:cardBackgroundColor="@color/off_white"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_weight="1"
-        android:layout_marginLeft="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginBottom="5dp">
+        android:layout_weight="1">
 
         <LinearLayout
             android:orientation="vertical"
@@ -39,17 +35,21 @@
                     android:layout_height="fill_parent"
                     android:background="@drawable/black_gradient"/>
 
-                <ImageView
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/user"
+                <RelativeLayout
+                    android:id="@+id/rlUserShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:contentDescription="@string/etsy_shop"/>
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/user"
+                        android:contentDescription="@string/etsy_shop"/>
+
+                </RelativeLayout>
 
             </RelativeLayout>
 

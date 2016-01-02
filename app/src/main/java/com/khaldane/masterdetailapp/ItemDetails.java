@@ -3,6 +3,7 @@ package com.khaldane.masterdetailapp;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +31,7 @@ public class ItemDetails extends AppCompatActivity {
         TextView tvItemTitle = (TextView) findViewById(R.id.tvItemTitle);
         TextView tvPrice = (TextView) findViewById(R.id.tvPrice);
 
-        tvItemTitle.setText(item.getTitle());
+        tvItemTitle.setText(Html.fromHtml(item.getTitle()));
         tvPrice.setText("$" + item.getPrice());
 
 
@@ -44,12 +45,12 @@ public class ItemDetails extends AppCompatActivity {
         tvQuantityNum.setText(Integer.toString(item.getQuantity()));
         tvFavoriteNum.setText(Integer.toString(item.getNum_favorers()));
         tvViewNum.setText(Integer.toString(item.getViews()));
-        tvTagBody.setText(Utility.parseArray(item.getTags()));
-        tvMaterialBody.setText(Utility.parseArray(item.getMaterials()));
+        tvTagBody.setText(Html.fromHtml(Utility.parseArray(item.getTags())));
+        tvMaterialBody.setText(Html.fromHtml(Utility.parseArray(item.getMaterials())));
 
         //Populate item description
         TextView tvItemDescBody = (TextView) findViewById(R.id.tvItemDescBody);
-        tvItemDescBody.setText(item.getDescription());
+        tvItemDescBody.setText(Html.fromHtml(item.getDescription()));
 
         handlers();
 

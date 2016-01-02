@@ -8,8 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
+import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
 import com.khaldane.masterdetailapp.EndpointContainers.Results;
+
+import java.util.ArrayList;
 
 public class Utility {
 
@@ -29,13 +31,13 @@ public class Utility {
         return builder.create();
     }
 
-    public static ListingDetails parseListingDetails(String parse) {
+    public static ListingDetailsDisplay parseListingDetails(String parse) {
         if(parse.equals("")) {
-            return new ListingDetails();
+            return new ListingDetailsDisplay();
         } else {
             Gson gson = new Gson();
             JsonObject t = (new JsonParser()).parse(parse).getAsJsonObject();
-            return gson.fromJson(t, ListingDetails.class);
+            return gson.fromJson(t, ListingDetailsDisplay.class);
         }
     }
 
@@ -60,5 +62,15 @@ public class Utility {
         } else {
             return "none";
         }
+    }
+
+    public static ArrayList<Results> stripNulls(Results[] results) {
+        ArrayList<Results> mNewResultsList = new ArrayList<>();
+        for (Results r : results) {
+            if (r.getTitle() != null && !r.getTitle().isEmpty() && r.getPrice() != null && !r.getPrice().isEmpty()) {
+                mNewResultsList.add(r);
+            }
+        }
+        return mNewResultsList;
     }
 }

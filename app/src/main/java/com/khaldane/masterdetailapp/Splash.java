@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.khaldane.masterdetailapp.EndpointContainers.ListingDetails;
+import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
 
 
 public class Splash extends AppCompatActivity {
@@ -74,15 +74,15 @@ public class Splash extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class GetFeaturedListings extends AsyncTask<Void, String, ListingDetails> {
+    class GetFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
-        protected ListingDetails doInBackground(Void... params) {
+        protected ListingDetailsDisplay doInBackground(Void... params) {
             return RetrofitCalls.getFeaturedListings(1, Splash.this);
         }
 
         @Override
-        protected void onPostExecute(ListingDetails results) {
+        protected void onPostExecute(ListingDetailsDisplay results) {
 
             updateLoadingStatus(true
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
@@ -90,15 +90,15 @@ public class Splash extends AppCompatActivity {
         }
     }
 
-    class GetTrendingListings extends AsyncTask<Void, String, ListingDetails> {
+    class GetTrendingListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
-        protected ListingDetails doInBackground(Void... params) {
+        protected ListingDetailsDisplay doInBackground(Void... params) {
             return RetrofitCalls.getTrendingListings(1, Splash.this);
         }
 
         @Override
-        protected void onPostExecute(ListingDetails results) {
+        protected void onPostExecute(ListingDetailsDisplay results) {
 
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
@@ -106,15 +106,15 @@ public class Splash extends AppCompatActivity {
         }
     }
 
-    class GetActiveListings extends AsyncTask<Void, String, ListingDetails> {
+    class GetActiveListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
-        protected ListingDetails doInBackground(Void... params) {
+        protected ListingDetailsDisplay doInBackground(Void... params) {
             return RetrofitCalls.getActiveListings(1, Splash.this);
         }
 
         @Override
-        protected void onPostExecute(ListingDetails results) {
+        protected void onPostExecute(ListingDetailsDisplay results) {
 
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , true
