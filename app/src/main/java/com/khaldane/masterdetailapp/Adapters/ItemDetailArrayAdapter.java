@@ -56,10 +56,7 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
         return convertView;
     }
 
-    public void refresh(List<Results> r, String type) {
-        if(type.equals("refresh")) {
-            results.clear();
-        }
+    public void refresh(List<Results> r) {
         this.results = r;
         notifyDataSetChanged();
     }

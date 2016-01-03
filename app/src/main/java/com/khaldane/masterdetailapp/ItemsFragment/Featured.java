@@ -101,13 +101,13 @@ public class Featured extends Fragment {
 
                 //Swiped to the bottom of gridview
                 if(firstVisibleItem + visibleItemCount == totalItemCount){
-                    if(totalItemCount != 0 && visibleItemCount != 0 &&  firstVisibleItem != 0) {
+                    //if(totalItemCount != 0 && visibleItemCount != 0 &&  firstVisibleItem != 0) {
                         int bottomPos = view.getChildAt(visibleItemCount - 1).getBottom();
                         if (!loadingEnd && vH >= bottomPos) {
                             loadingEnd = true;
                             new GetMoreFeaturedListings().execute();
                         }
-                    }
+                    //}
                 }
             }
 
@@ -134,7 +134,12 @@ public class Featured extends Fragment {
         protected void onPostExecute(ListingDetailsDisplay results) {
 
             SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
-            featuredAdapter.refresh(results.getResults(), "refresh");
+            featured.getResults().clear();
+            featured.getResults().addAll(results.getResults());
+
+            GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
+            gvFeatured.invalidateViews();
+
             currentPage = 1;
             loadingStart = false;
             swipeContainer.setRefreshing(false);
@@ -162,7 +167,7 @@ public class Featured extends Fragment {
 
             featured.getResults().addAll(results.getResults());
 
-            featuredAdapter.refresh(featured.getResults(), "load");
+            featuredAdapter.refresh(featured.getResults());
             loadingEnd = false;
             pbLoadingFeatures.setVisibility(View.GONE);
             swipeContainer.setRefreshing(false);
