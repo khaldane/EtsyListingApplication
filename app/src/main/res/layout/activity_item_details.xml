@@ -21,10 +21,10 @@
             android:adjustViewBounds="true"
             android:scaleType="fitXY"/>
 
-        <!--<RelativeLayout-->
-            <!--android:layout_width="fill_parent"-->
-            <!--android:layout_height="fill_parent"-->
-            <!--android:background="@drawable/light_gradient"/>-->
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/light_gradient"/>
 
     </RelativeLayout>
 

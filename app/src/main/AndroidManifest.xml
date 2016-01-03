@@ -33,10 +33,6 @@
             android:label="@string/title_activity_details"
             android:screenOrientation="portrait" >
         </activity>
-        <activity
-            android:name=".ShopDetails"
-            android:label="@string/title_activity_user_details" >
-        </activity>
     </application>
 
 </manifest>

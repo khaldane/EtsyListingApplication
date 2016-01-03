@@ -1,6 +1,5 @@
 package com.khaldane.masterdetailapp.EndpointContainers;
 
-import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -21,11 +20,4 @@ public interface Etsy {
 
     //Search Listings -
 
-    //Get Shop Details - https://openapi.etsy.com/v2/shops/:shop_id?api_key=sifux1jmywuercksb4d8cdum
-    @GET("/v2/shops/:shop_id?api_key=sifux1jmywuercksb4d8cdum")
-    void getShopDetails(Callback<ShopDetails> response);
-
-    //Item Image -
-
-    //Shop Image -
 }

@@ -40,7 +40,6 @@ public class Featured extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         populateFeatured();
 
         handlers();
@@ -81,10 +80,13 @@ public class Featured extends Fragment {
 
     private void handlers() {
 
-
-        SwipeRefreshLayout sc = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
-        sc.setEnabled(false);
-
+        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetFeaturedListings().execute();
+            }
+        });
 
         final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
         gvFeatured.setOnScrollListener(new AbsListView.OnScrollListener(){
@@ -95,19 +97,16 @@ public class Featured extends Fragment {
                 int vH = view.getHeight();
 
                 //Swiped to top of the gridview
-                if(firstVisibleItem == 0 && topRowVerticalPosition >= 0) {
-                    if(!loadingStart) {
-                        loadingStart = true;
-                        //new GetFeaturedListings().execute();
-                    }
-                }
+                swipeContainer.setEnabled(firstVisibleItem == 0 && topRowVerticalPosition >= 0);
 
                 //Swiped to the bottom of gridview
                 if(firstVisibleItem + visibleItemCount == totalItemCount){
-                    int bottomPos = view.getChildAt(visibleItemCount - 1).getBottom();
-                    if(!loadingEnd && vH >= bottomPos) {
-                        loadingEnd = true;
-                        new GetMoreFeaturedListings().execute();
+                    if(totalItemCount != 0 && visibleItemCount != 0 &&  firstVisibleItem != 0) {
+                        int bottomPos = view.getChildAt(visibleItemCount - 1).getBottom();
+                        if (!loadingEnd && vH >= bottomPos) {
+                            loadingEnd = true;
+                            new GetMoreFeaturedListings().execute();
+                        }
                     }
                 }
             }
@@ -121,11 +120,9 @@ public class Featured extends Fragment {
 
     class GetFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
-        final SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
-
         @Override
         protected void onPreExecute() {
-            swipeContainer.setEnabled(true);
+            loadingStart = true;
         }
 
         @Override
@@ -135,7 +132,9 @@ public class Featured extends Fragment {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-            featuredAdapter.refresh(results.getResults());
+
+            SwipeRefreshLayout swipeContainer = (SwipeRefreshLayout) getView().findViewById(R.id.swipe_container);
+            featuredAdapter.refresh(results.getResults(), "refresh");
             currentPage = 1;
             loadingStart = false;
             swipeContainer.setRefreshing(false);
@@ -163,7 +162,7 @@ public class Featured extends Fragment {
 
             featured.getResults().addAll(results.getResults());
 
-            featuredAdapter.refresh(featured.getResults());
+            featuredAdapter.refresh(featured.getResults(), "load");
             loadingEnd = false;
             pbLoadingFeatures.setVisibility(View.GONE);
             swipeContainer.setRefreshing(false);

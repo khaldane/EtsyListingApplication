@@ -2,26 +2,18 @@ package com.khaldane.masterdetailapp.Adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.khaldane.masterdetailapp.EndpointContainers.Results;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.ShopDetails;
+import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.List;
 
 public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
@@ -38,69 +30,43 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View item = convertView;
-        Lead Wrapper = null;
+        ViewHolder holder;
 
-        if (item == null) {
+        if (convertView == null) {
             LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            item = inflater.inflate(layoutResourceId, parent, false);
-            Wrapper = new Lead();
-            Wrapper.mainImage = (ImageView) item.findViewById(R.id.tvMainImage);
-            Wrapper.title = (TextView) item.findViewById(R.id.tvItemTitle);
-            Wrapper.price = (TextView) item.findViewById(R.id.tvPrice);
-            Wrapper.shop = (RelativeLayout) item.findViewById(R.id.rlUserShop);
-            item.setTag(Wrapper);
+            convertView = inflater.inflate(layoutResourceId, parent, false);
+            holder = new ViewHolder();
+            holder.mainImage = (ImageView) convertView.findViewById(R.id.tvMainImage);
+            holder.title = (TextView) convertView.findViewById(R.id.tvItemTitle);
+            holder.price = (TextView) convertView.findViewById(R.id.tvPrice);
+            convertView.setTag(holder);
         } else {
-            Wrapper = (Lead) item.getTag();
+            //View has been recycled
+            holder = (ViewHolder) convertView.getTag();
+
         }
 
         final Results a = results.get(position);
 
-        final Lead finalWrapper = Wrapper;
+        Picasso.with(context).load(a.getMainImage().getUrl_170x135()).into(holder.mainImage);
 
-        new Thread(new Runnable() {
-            public void run() {
-                try {
-                    final Bitmap bitmap = BitmapFactory.decodeStream((InputStream) new URL(a.getMainImage().getUrl_170x135()).getContent());
+        holder.title.setText(Html.fromHtml(a.getTitle()));
+        holder.price.setText("$" + a.getPrice());
 
-                    ((AppCompatActivity)context).runOnUiThread(new Runnable() {
-                        public void run() {
-                            finalWrapper.mainImage.setImageBitmap(bitmap);
-                        }
-                    });
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        }).start();
-
-        Wrapper.title.setText(Html.fromHtml(a.getTitle()));
-        Wrapper.price.setText("$" + a.getPrice());
-
-
-        Wrapper.shop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ShopDetails.class);
-                intent.putExtra("userId", position);
-                context.startActivity(intent);
-            }
-        });
-
-        return item;
+        return convertView;
     }
 
-    public void refresh(List<Results> r) {
+    public void refresh(List<Results> r, String type) {
+        if(type.equals("refresh")) {
+            results.clear();
+        }
         this.results = r;
         notifyDataSetChanged();
     }
 
-    static class Lead {
+    static class ViewHolder {
         ImageView mainImage;
         TextView title;
         TextView price;
-        RelativeLayout shop;
     }
 }
