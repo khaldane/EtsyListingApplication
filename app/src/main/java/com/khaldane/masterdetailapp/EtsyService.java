@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import retrofit.RestAdapter;
 
 
-public class RetrofitCalls {
+public class EtsyService {
 
     private static final String ENDPOINT = "https://openapi.etsy.com";
 

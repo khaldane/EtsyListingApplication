@@ -8,12 +8,10 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -75,7 +73,7 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
-            return RetrofitCalls.getFeaturedListings(1, Splash.this);
+            return EtsyService.getFeaturedListings(1, Splash.this);
         }
 
         @Override
@@ -93,7 +91,7 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
-            return RetrofitCalls.getTrendingListings(1, Splash.this);
+            return EtsyService.getTrendingListings(1, Splash.this);
         }
 
         @Override
@@ -111,7 +109,7 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
-            return RetrofitCalls.getActiveListings(1, Splash.this);
+            return EtsyService.getActiveListings(1, Splash.this);
         }
 
         @Override
@@ -130,18 +128,16 @@ public class Splash extends AppCompatActivity {
     private void updateLoadingStatus(Boolean featured, Boolean trending, Boolean active) {
         if(featured && trending && active) {
             TextView tvLoading = (TextView) findViewById(R.id.tvLoading);
-            tvLoading.setText("GET STARTED");
+            tvLoading.setText("CLICK ANYWHERE TO GET STARTED");
 
             ProgressBar pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
             pbLoading.setVisibility(View.GONE);
 
-            ImageView ivGetStartedArrow = (ImageView) findViewById(R.id.ivGetStartedArrow);
-            ivGetStartedArrow.setVisibility(View.VISIBLE);
+            LinearLayout llLoadingBody = (LinearLayout) findViewById(R.id.llLoadingBody);
+            llLoadingBody.setGravity(Gravity.CENTER|Gravity.BOTTOM);
 
-            arrowAnimation();
-
-            LinearLayout rlLoading = (LinearLayout) findViewById(R.id.rlLoading);
-            rlLoading.setOnClickListener(new View.OnClickListener() {
+            LinearLayout llLoading = (LinearLayout) findViewById(R.id.llLoading);
+            llLoading.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Splash.this, Main.class);
@@ -150,36 +146,6 @@ public class Splash extends AppCompatActivity {
             });
         }
     }
-
-    /*
-     * Sets the arrow animation
-     */
-    private void arrowAnimation() {
-        final ImageView ivGetStartedArrow = (ImageView) findViewById(R.id.ivGetStartedArrow);
-        final Animation slideAnimation = AnimationUtils.loadAnimation(this, R.anim.slide);
-
-        slideAnimation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                slideAnimation.setAnimationListener(this);
-                slideAnimation.setStartOffset(300);
-                ivGetStartedArrow.startAnimation(slideAnimation);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        ivGetStartedArrow.startAnimation(slideAnimation);
-    }
-
 
     /*
      * Checks if the user has connection to the internet

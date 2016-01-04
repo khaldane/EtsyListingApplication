@@ -21,7 +21,7 @@ import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
 import com.khaldane.masterdetailapp.ItemDetails;
 import com.khaldane.masterdetailapp.Main;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.RetrofitCalls;
+import com.khaldane.masterdetailapp.EtsyService;
 import com.khaldane.masterdetailapp.Utility;
 
 public class Listings extends Fragment {
@@ -62,7 +62,7 @@ public class Listings extends Fragment {
         //Determine if it is being called from tab view or search view
         if(search) {
             String query = bundle.getString("query", "");
-            listing = RetrofitCalls.getSearchQuery(1, query);
+            listing = EtsyService.getSearchQuery(1, query);
         } else {
             String[] type = { "featured", "trending", "active"};
             listing = Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString(type[position], ""));
@@ -150,11 +150,11 @@ public class Listings extends Fragment {
             //Determine which view tab view is active
             switch(position) {
                 case 1:
-                    return RetrofitCalls.getTrendingListings(currentPage, getActivity());
+                    return EtsyService.getTrendingListings(currentPage, getActivity());
                 case 2:
-                    return RetrofitCalls.getActiveListings(currentPage, getActivity());
+                    return EtsyService.getActiveListings(currentPage, getActivity());
                 default:
-                    return RetrofitCalls.getFeaturedListings(currentPage, getActivity());
+                    return EtsyService.getFeaturedListings(currentPage, getActivity());
             }
         }
 
@@ -194,11 +194,11 @@ public class Listings extends Fragment {
             //Determine which view tab view is active
             switch(position) {
                 case 1:
-                    return RetrofitCalls.getTrendingListings(currentPage, getActivity());
+                    return EtsyService.getTrendingListings(currentPage, getActivity());
                 case 2:
-                    return RetrofitCalls.getActiveListings(currentPage, getActivity());
+                    return EtsyService.getActiveListings(currentPage, getActivity());
                 default:
-                    return RetrofitCalls.getFeaturedListings(currentPage, getActivity());
+                    return EtsyService.getFeaturedListings(currentPage, getActivity());
             }
         }
 
