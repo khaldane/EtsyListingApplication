@@ -58,4 +58,13 @@ public class RetrofitCalls {
         return activeDisplay;
     }
 
+    public static ListingDetailsDisplay getSearchQuery(int page, String query) {
+        ListingDetails search = sService.getSearchQuery(page, query);
+        ListingDetailsDisplay searchDisplay = new ListingDetailsDisplay();
+        ArrayList<Results>  containsNulls = Utility.stripNulls(search.getResults());
+        searchDisplay.setResults(containsNulls);
+
+        return searchDisplay;
+    }
+
 }

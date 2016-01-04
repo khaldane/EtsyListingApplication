@@ -36,4 +36,6 @@
     <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="view_shop">VIEW SHOP</string>
     <string name="item_name">ITEM NAME</string>
+    <string name="title_activity_search">Search</string>
+    <string name="khaldane">khaldane</string>
 </resources>

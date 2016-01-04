@@ -51,7 +51,21 @@ public class Featured extends Fragment {
         final TextView tvNoResults = (TextView) getActivity().findViewById(R.id.tvNoResults);
         final GridView gvFeatured = (GridView) getView().findViewById(R.id.gvFeatured);
 
-        featured = Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString("featured", ""));
+        //Get the viewpage
+        Bundle bundle = this.getArguments();
+        boolean search = bundle.getBoolean("search", false);
+        int position = bundle.getInt("position", 0);
+
+        if(search) {
+            String query = bundle.getString("query", "");
+            //featured = RetrofitCalls.getSearchQuery(1, query);
+
+        } else {
+            String[] type = { "featured", "trending", "active"};
+
+            featured = Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString(type[position], ""));
+        }
+
 
         if (featured.getResults().size() > 0) {
             gvFeatured.setVisibility(View.VISIBLE);

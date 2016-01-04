@@ -1,6 +1,7 @@
 package com.khaldane.masterdetailapp.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -25,7 +26,12 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
     //This method return the fragment for the every position in the View Pager
     @Override
     public Fragment getItem(int position) {
-        return Fragment.instantiate(context, mFragments[position]);
+
+        Bundle args = new Bundle();
+        args.putInt("position", position);
+        args.putBoolean("search", false);
+
+        return Fragment.instantiate(context, mFragments[position], args);
     }
 
     // This method return the titles for the Tabs in the Tab Strip
@@ -42,7 +48,6 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getItemPosition(Object object) {
-
         return super.getItemPosition(object);
     }
 }
