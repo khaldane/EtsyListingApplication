@@ -25,6 +25,7 @@
         parent="@style/Widget.AppCompat.Light.ActionBar">
         <item name="android:background">@color/off_white</item>
         <item name="background">@color/off_white</item>
+        <item name="android:paddingRight">10dp</item>
     </style>
 
 </resources>

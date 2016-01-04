@@ -11,8 +11,6 @@
         android:layout_height="20dp"
         android:background="@drawable/search_icon_gray"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
         android:contentDescription="@string/search_icon"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -24,8 +22,6 @@
         android:layout_height="15dp"
         android:background="@drawable/close"
         android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
         android:contentDescription="@string/close_icon"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -47,8 +43,7 @@
         android:visibility="gone"
         android:layout_toRightOf="@+id/ivLogo"
         android:layout_toEndOf="@+id/ivLogo"
-        android:maxLines="1"
-        android:lines="1"/>
+        android:maxLines="1"/>
 
     <ImageView
         android:id="@+id/ivSrcMag"

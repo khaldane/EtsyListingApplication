@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,10 @@ import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.Adapters.ItemDetailArrayAdapter;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
 import com.khaldane.masterdetailapp.GlobalClasses.EtsyService;
+import com.khaldane.masterdetailapp.GlobalClasses.Utility;
 import com.khaldane.masterdetailapp.ItemDetails;
 import com.khaldane.masterdetailapp.Main;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.GlobalClasses.Utility;
 
 public class Listings extends Fragment {
 
@@ -226,7 +227,7 @@ public class Listings extends Fragment {
             loadingEnd = false;
             pbLoadingListings.setVisibility(View.GONE);
             //Hide the swipe loading
-            SwipeRefreshLayout scListings = (SwipeRefreshLayout) getView().findViewById(R.id.scListings);
+            SwipeRefreshLayout scListings = (SwipeRefreshLayout) fragView.findViewById(R.id.scListings);
             scListings.setRefreshing(false);
         }
     }
@@ -235,7 +236,7 @@ public class Listings extends Fragment {
      * Get more listings
      */
     class GetSearchResults extends AsyncTask<Void, String, ListingDetailsDisplay> {
-        final ProgressBar pbLoadingListings = (ProgressBar) getView().findViewById(R.id.pbLoadingListings);
+        final ProgressBar pbLoadingListings = (ProgressBar) fragView.findViewById(R.id.pbLoadingListings);
 
         @Override
         protected void onPreExecute() {
@@ -253,7 +254,7 @@ public class Listings extends Fragment {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-            TextView tvNoResults = (TextView) getView().findViewById(R.id.tvNoResults);
+            TextView tvNoResults = (TextView) fragView.findViewById(R.id.tvNoResults);
             if(results == null) {
                 tvNoResults.setVisibility(View.VISIBLE);
                 pbLoadingListings.setVisibility(View.GONE);
@@ -263,7 +264,11 @@ public class Listings extends Fragment {
             } else {
                 listing = results;
                 pbLoadingListings.setVisibility(View.GONE);
-                populateGridView();
+                try {
+                    populateGridView();
+                } catch (Exception ex) {
+                    Log.d("SearchResultGridView", ex.toString());
+                }
             }
         }
     }
