@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
+import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;import com.khaldane.masterdetailapp.GlobalClasses.EtsyService;
 
 
 public class Splash extends AppCompatActivity {
@@ -69,7 +69,7 @@ public class Splash extends AppCompatActivity {
     /*
      * Gets the features listings from Etsy
      */
-    class GetFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
+    private class GetFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
@@ -87,7 +87,7 @@ public class Splash extends AppCompatActivity {
     /*
      * Gets the trending listings from Etsy
      */
-    class GetTrendingListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
+    private class GetTrendingListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
@@ -105,7 +105,7 @@ public class Splash extends AppCompatActivity {
     /*
      * Gets the active listings from Etsy
      */
-    class GetActiveListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
+    private class GetActiveListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {

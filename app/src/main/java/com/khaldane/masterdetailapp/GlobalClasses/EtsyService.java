@@ -1,4 +1,4 @@
-package com.khaldane.masterdetailapp;
+package com.khaldane.masterdetailapp.GlobalClasses;
 
 import android.content.Context;
 

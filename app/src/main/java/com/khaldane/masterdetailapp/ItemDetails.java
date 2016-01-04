@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.khaldane.masterdetailapp.EndpointContainers.Results;
+import com.khaldane.masterdetailapp.GlobalClasses.Utility;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,32 +33,35 @@ public class ItemDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
 
-        populateActivity();
+        //Get the bundle
+        Bundle bundle = getIntent().getExtras();
+        String itemDetails = bundle.getString("itemDetails", "");
+
+        if(!itemDetails.equals("")) {
+            populateActivity(itemDetails);
+        } else {
+            Toast.makeText(this, "Error obtaining item details",
+                    Toast.LENGTH_LONG).show();
+        }
 
         handlers();
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_details, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
     }
 
     /*
      * Populates the activity
      */
-    private void populateActivity() {
-        //Get the bundle
-        Bundle mBundle = getIntent().getExtras();
-        String itemDetails = mBundle.getString("itemDetails", "");
+    private void populateActivity(String itemDetails) {
 
         final Results item = Utility.parseResults(itemDetails);
 
@@ -76,7 +82,7 @@ public class ItemDetails extends AppCompatActivity {
                     });
 
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    Log.d("bitmapError", e.toString());
                 }
             }
 

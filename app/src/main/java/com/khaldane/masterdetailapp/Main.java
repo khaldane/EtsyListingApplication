@@ -36,8 +36,8 @@ public class Main extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        MenuItem mSearchbar = menu.findItem(R.id.action_search);
-        View actionView = mSearchbar.getActionView();
+        MenuItem mSearchBar = menu.findItem(R.id.action_search);
+        View actionView = mSearchBar.getActionView();
 
         final EditText etSearch = (EditText) actionView.findViewById(R.id.etSearch);
         final ImageView ivSrcMag = (ImageView) actionView.findViewById(R.id.ivSrcMag);
@@ -92,7 +92,9 @@ public class Main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
+    /*
+     * Populate tab view
+     */
     private void populateTabs() {
         TabLayout tabs;
 

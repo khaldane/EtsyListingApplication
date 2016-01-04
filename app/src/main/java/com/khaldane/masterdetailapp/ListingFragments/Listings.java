@@ -3,7 +3,6 @@ package com.khaldane.masterdetailapp.ListingFragments;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -18,11 +17,11 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.Adapters.ItemDetailArrayAdapter;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
-import com.khaldane.masterdetailapp.EtsyService;
+import com.khaldane.masterdetailapp.GlobalClasses.EtsyService;
 import com.khaldane.masterdetailapp.ItemDetails;
 import com.khaldane.masterdetailapp.Main;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.Utility;
+import com.khaldane.masterdetailapp.GlobalClasses.Utility;
 
 public class Listings extends Fragment {
 
@@ -32,10 +31,12 @@ public class Listings extends Fragment {
     private ListingDetailsDisplay listing;
     private boolean search;
     private String query;
+    private View fragView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_listings,container,false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        fragView = inflater.inflate(R.layout.fragment_listings,container,false);
+        return fragView;
     }
 
     @Override
@@ -67,11 +68,13 @@ public class Listings extends Fragment {
         }
     }
 
+    /*
+     * Populate the gridview
+     */
     private void populateGridView() {
-        final TextView tvNoResults = (TextView) getView().findViewById(R.id.tvNoResults);
-        final GridView gvListings = (GridView) getView().findViewById(R.id.gvListings);
+        final TextView tvNoResults = (TextView) fragView.findViewById(R.id.tvNoResults);
+        final GridView gvListings = (GridView) fragView.findViewById(R.id.gvListings);
 
-        //Populate the gridview
         if(listing.getResults().size() > 0) {
             gvListings.setVisibility(View.VISIBLE);
             tvNoResults.setVisibility(View.GONE);
@@ -99,13 +102,12 @@ public class Listings extends Fragment {
         handlers();
     }
 
-
     /*
      * Handlers
      */
     private void handlers() {
         //Swipe container refresh listener
-        final SwipeRefreshLayout scListings = (SwipeRefreshLayout) getView().findViewById(R.id.scListings);
+        final SwipeRefreshLayout scListings = (SwipeRefreshLayout) fragView.findViewById(R.id.scListings);
         scListings.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -114,7 +116,7 @@ public class Listings extends Fragment {
         });
 
         //GridView on scroll listner
-        final GridView gvListings = (GridView) getView().findViewById(R.id.gvListings);
+        final GridView gvListings = (GridView) fragView.findViewById(R.id.gvListings);
         gvListings.setOnScrollListener(new AbsListView.OnScrollListener(){
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount)
@@ -152,10 +154,10 @@ public class Listings extends Fragment {
             if(search) {
                 return EtsyService.getSearchQuery(1, query);
             } else {
-                Main main = (Main) getView().getContext();
+                Main main = (Main) fragView.getContext();
                 int position = main.getViewPager();
 
-            //Determine which view tab view is active
+                //Determine which view tab view is active
                 switch (position) {
                     case 1:
                         return EtsyService.getTrendingListings(1, getActivity());
@@ -170,12 +172,12 @@ public class Listings extends Fragment {
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
             //Reset the listing array list
-            SwipeRefreshLayout scListings = (SwipeRefreshLayout) getView().findViewById(R.id.scListings);
+            SwipeRefreshLayout scListings = (SwipeRefreshLayout) fragView.findViewById(R.id.scListings);
             listing.getResults().clear();
             listing.getResults().addAll(results.getResults());
 
             //Refresh the grid view
-            GridView gvListings = (GridView) getView().findViewById(R.id.gvListings);
+            GridView gvListings = (GridView) fragView.findViewById(R.id.gvListings);
             gvListings.invalidateViews();
 
             currentPage = 1;
@@ -187,7 +189,7 @@ public class Listings extends Fragment {
      * Get more listings
      */
     class GetMoreListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
-        final ProgressBar pbLoadingListings = (ProgressBar) getView().findViewById(R.id.pbLoadingListings);
+        final ProgressBar pbLoadingListings = (ProgressBar) fragView.findViewById(R.id.pbLoadingListings);
 
         @Override
         protected void onPreExecute() {
@@ -200,7 +202,7 @@ public class Listings extends Fragment {
             if(search) {
                 return EtsyService.getSearchQuery(currentPage, query);
             } else {
-                Main main = (Main) getView().getContext();
+                Main main = (Main) fragView.getContext();
                 int position = main.getViewPager();
 
                 //Determine which view tab view is active
