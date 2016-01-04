@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivReturnArrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/arrow_left"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/back"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:clickable="true" />
+
+    <TextView
+        android:id="@+id/tvQuery"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/query"
+        android:textColor="@color/text_secondary_gray"
+        android:layout_toRightOf="@id/ivReturnArrow"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/ivReturnArrow"
+        android:textAppearance="@android:style/TextAppearance.Medium"
+        android:singleLine="true"
+        android:lines="1"
+        android:ellipsize="end"/>
+
+</RelativeLayout>

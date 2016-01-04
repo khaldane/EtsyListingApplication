@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="5dp"
+    android:id="@+id/rlCustomSearch">
+
+    <ImageView
+        android:id="@+id/ivSearchImage"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/search_icon_gray"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/search_icon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
+
+    <ImageView
+        android:id="@+id/ivClose"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:background="@drawable/close"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:contentDescription="@string/close_icon"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:clickable="true"
+        android:visibility="gone"/>
+
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_toLeftOf="@+id/ivSearchImage"
+        android:hint="@string/search_placeholder"
+        android:imeOptions="actionSearch"
+        android:paddingLeft="30dp"
+        android:singleLine="true"
+        android:textColor="@color/text_primary_gray"
+        android:textColorHint="@color/text_secondary_gray"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/ivLogo"
+        android:layout_toEndOf="@+id/ivLogo"
+        android:maxLines="1"
+        android:lines="1"/>
+
+    <ImageView
+        android:id="@+id/ivSrcMag"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/search_icon_gray"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginEnd="5dp"
+        android:contentDescription="@string/search_icon"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/ivLogo"
+        android:layout_toEndOf="@+id/ivLogo"/>
+
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo_actionbar"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"/>
+
+</RelativeLayout>

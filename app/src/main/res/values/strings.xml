@@ -42,4 +42,8 @@
     <string name="logo">khaldane logo</string>
     <string name="scroll_up">Scroll up to refresh</string>
     <string name="scroll_down">Scroll down to load more</string>
+    <string name="close_icon">Close search bar</string>
+    <string name="results">Results</string>
+    <string name="back">Return</string>
+    <string name="query">Query</string>
 </resources>

@@ -6,6 +6,6 @@
         android:icon="@drawable/search_icon_gray"
         android:title="@string/search_placeholder"
         appcompat:showAsAction="always"
-        appcompat:actionViewClass="android.support.v7.widget.SearchView"/>
+        appcompat:actionLayout="@layout/actionbar_search"/>
 
 </menu>

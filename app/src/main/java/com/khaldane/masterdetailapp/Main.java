@@ -1,17 +1,18 @@
 package com.khaldane.masterdetailapp;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.khaldane.masterdetailapp.Adapters.TabViewPagerAdapter;
 import com.khaldane.masterdetailapp.SlidingTabs.TabLayout;
@@ -26,13 +27,7 @@ public class Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Set up actionbar
-        ActionBar supportActionBar =getSupportActionBar();
-        assert getSupportActionBar() != null;
-        supportActionBar.setDisplayShowTitleEnabled(false);
-        supportActionBar.setDisplayShowHomeEnabled(true);
-        supportActionBar.setIcon(R.mipmap.ic_launcher);
-        supportActionBar.setElevation(0);
+        setUpActionbar();
 
         populateTabs();
     }
@@ -41,44 +36,54 @@ public class Main extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        MenuItem searchMenuItem = menu.findItem(R.id.action_search);
+        MenuItem mSearchbar = menu.findItem(R.id.action_search);
+        View actionView = mSearchbar.getActionView();
 
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        final EditText etSearch = (EditText) actionView.findViewById(R.id.etSearch);
+        final ImageView ivSrcMag = (ImageView) actionView.findViewById(R.id.ivSrcMag);
+        final ImageView ivClose = (ImageView) actionView.findViewById(R.id.ivClose);
+        final ImageView ivLogo = (ImageView) actionView.findViewById(R.id.ivLogo);
+        final ImageView ivSearchImg = (ImageView) actionView.findViewById(R.id.ivSearchImage);
 
-        //Listener for submitting search query
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Intent intent = new Intent(Main.this, Search.class);
-                intent.putExtra("query", query);
-                startActivity(intent);
-
-                return false;
-            }
+        ivSearchImg.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
+            public void onClick(View view) {
+                ivSrcMag.setVisibility(View.VISIBLE);
+                etSearch.setVisibility(View.VISIBLE);
+                ivClose.setVisibility(View.VISIBLE);
+                ivSearchImg.setVisibility(View.INVISIBLE);
+                ivLogo.setVisibility(View.GONE);
             }
         });
 
-        //Search Text
-        SearchView.SearchAutoComplete searchAutoComplete = (SearchView.SearchAutoComplete)searchView.findViewById(android.support.v7.appcompat.R.id.search_src_text);
-        searchAutoComplete.setHintTextColor(getResources().getColor(R.color.text_secondary_gray));
-        searchAutoComplete.setHint("Search for items on Etsy");
-        searchAutoComplete.setTextAppearance(this, android.R.style.TextAppearance_Small);
-        searchAutoComplete.setTextColor(getResources().getColor(R.color.text_primary_gray));
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ivSrcMag.setVisibility(View.GONE);
+                etSearch.setVisibility(View.GONE);
+                ivClose.setVisibility(View.GONE);
+                ivSearchImg.setVisibility(View.VISIBLE);
+                ivLogo.setVisibility(View.VISIBLE);
+            }
+        });
 
-        //Search Button
-        ImageView searchIcon = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        searchIcon.setImageResource(R.drawable.arrow_left);
-//
-//        //Clear button
-//        ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
-//        searchClose.setImageResource(R.drawable.user);
+        etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
 
+                    String s = etSearch.getText().toString();
+
+                    Intent intent = new Intent(Main.this,
+                            Search.class);
+                    intent.putExtra("query", s);
+                    startActivity(intent);
+
+                }
+                return false;
+            }
+        });
         return true;
     }
 
@@ -114,6 +119,17 @@ public class Main extends AppCompatActivity {
         tabs.setCustomTabView(R.layout.tab_global, R.id.tabText);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
         tabs.setViewPager(pager);
+    }
+
+    /*
+     * Set up the actionbar
+     */
+    private void setUpActionbar() {
+        ActionBar supportActionBar =getSupportActionBar();
+        assert getSupportActionBar() != null;
+        supportActionBar.setDisplayShowTitleEnabled(false);
+        supportActionBar.setDisplayShowHomeEnabled(false);
+        supportActionBar.setElevation(0);
     }
 
     /*
