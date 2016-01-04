@@ -18,10 +18,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.khaldane.masterdetailapp.Adapters.ItemDetailArrayAdapter;
 import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
+import com.khaldane.masterdetailapp.EtsyService;
 import com.khaldane.masterdetailapp.ItemDetails;
 import com.khaldane.masterdetailapp.Main;
 import com.khaldane.masterdetailapp.R;
-import com.khaldane.masterdetailapp.EtsyService;
 import com.khaldane.masterdetailapp.Utility;
 
 public class Listings extends Fragment {
@@ -30,6 +30,8 @@ public class Listings extends Fragment {
     private boolean loadingEnd = false;
     private ItemDetailArrayAdapter listingAdapter;
     private ListingDetailsDisplay listing;
+    private boolean search;
+    private String query;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,32 +43,33 @@ public class Listings extends Fragment {
         super.onCreate(savedInstanceState);
 
         populateListings();
-
-        handlers();
     }
 
     /*
      * Populate the listings gridview
      */
     private void populateListings() {
-        String SHARED_PREFS = "com.khaldane.masterdetailapp";
-
-        final TextView tvNoResults = (TextView) getView().findViewById(R.id.tvNoResults);
-        final GridView gvListings = (GridView) getView().findViewById(R.id.gvListings);
+        final String SHARED_PREFS = "com.khaldane.masterdetailapp";
 
         //Get the viewpage
         Bundle bundle = this.getArguments();
-        boolean search = bundle.getBoolean("search", false);
-        int position = bundle.getInt("position", 0);
+        search = bundle.getBoolean("search", false);
+        final int position = bundle.getInt("position", 0);
 
         //Determine if it is being called from tab view or search view
         if(search) {
-            String query = bundle.getString("query", "");
-            listing = EtsyService.getSearchQuery(1, query);
+            query = bundle.getString("query", "");
+            new GetSearchResults().execute();
         } else {
             String[] type = { "featured", "trending", "active"};
             listing = Utility.parseListingDetails(getActivity().getSharedPreferences(SHARED_PREFS, getActivity().MODE_PRIVATE).getString(type[position], ""));
+            populateGridView();
         }
+    }
+
+    private void populateGridView() {
+        final TextView tvNoResults = (TextView) getView().findViewById(R.id.tvNoResults);
+        final GridView gvListings = (GridView) getView().findViewById(R.id.gvListings);
 
         //Populate the gridview
         if(listing.getResults().size() > 0) {
@@ -92,6 +95,8 @@ public class Listings extends Fragment {
             gvListings.setVisibility(View.GONE);
             tvNoResults.setVisibility(View.VISIBLE);
         }
+
+        handlers();
     }
 
 
@@ -144,17 +149,21 @@ public class Listings extends Fragment {
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
-            Main main = (Main) getView().getContext();
-            int position = main.getViewPager();
+            if(search) {
+                return EtsyService.getSearchQuery(1, query);
+            } else {
+                Main main = (Main) getView().getContext();
+                int position = main.getViewPager();
 
             //Determine which view tab view is active
-            switch(position) {
-                case 1:
-                    return EtsyService.getTrendingListings(currentPage, getActivity());
-                case 2:
-                    return EtsyService.getActiveListings(currentPage, getActivity());
-                default:
-                    return EtsyService.getFeaturedListings(currentPage, getActivity());
+                switch (position) {
+                    case 1:
+                        return EtsyService.getTrendingListings(1, getActivity());
+                    case 2:
+                        return EtsyService.getActiveListings(1, getActivity());
+                    default:
+                        return EtsyService.getFeaturedListings(1, getActivity());
+                }
             }
         }
 
@@ -188,17 +197,21 @@ public class Listings extends Fragment {
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
             currentPage = currentPage + 1;
-            Main main = (Main) getView().getContext();
-            int position = main.getViewPager();
+            if(search) {
+                return EtsyService.getSearchQuery(currentPage, query);
+            } else {
+                Main main = (Main) getView().getContext();
+                int position = main.getViewPager();
 
-            //Determine which view tab view is active
-            switch(position) {
-                case 1:
-                    return EtsyService.getTrendingListings(currentPage, getActivity());
-                case 2:
-                    return EtsyService.getActiveListings(currentPage, getActivity());
-                default:
-                    return EtsyService.getFeaturedListings(currentPage, getActivity());
+                //Determine which view tab view is active
+                switch (position) {
+                    case 1:
+                        return EtsyService.getTrendingListings(currentPage, getActivity());
+                    case 2:
+                        return EtsyService.getActiveListings(currentPage, getActivity());
+                    default:
+                        return EtsyService.getFeaturedListings(currentPage, getActivity());
+                }
             }
         }
 
@@ -213,6 +226,27 @@ public class Listings extends Fragment {
             //Hide the swipe loading
             SwipeRefreshLayout scListings = (SwipeRefreshLayout) getView().findViewById(R.id.scListings);
             scListings.setRefreshing(false);
+        }
+    }
+
+    /*
+     * Get more listings
+     */
+    class GetSearchResults extends AsyncTask<Void, String, ListingDetailsDisplay> {
+
+        @Override
+        protected ListingDetailsDisplay doInBackground(Void... params) {
+            if(query.equals("")) {
+                return null;
+            } else {
+                return EtsyService.getSearchQuery(1, query);
+            }
+        }
+
+        @Override
+        protected void onPostExecute(ListingDetailsDisplay results) {
+            listing = results;
+            populateGridView();
         }
     }
 }

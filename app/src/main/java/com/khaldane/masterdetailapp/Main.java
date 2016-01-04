@@ -73,7 +73,7 @@ public class Main extends AppCompatActivity {
 
         //Search Button
         ImageView searchIcon = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
-        searchIcon.setImageResource(R.drawable.user);
+        searchIcon.setImageResource(R.drawable.arrow_left);
 //
 //        //Clear button
 //        ImageView searchClose = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_close_btn);
