@@ -9,7 +9,10 @@ import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -154,7 +157,35 @@ public class ItemDetails extends AppCompatActivity {
                 tvItemDescBody.setVisibility(View.VISIBLE);
             }
         });
+        final LinearLayout llReturn = (LinearLayout) findViewById(R.id.llReturn);
 
+        llReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ScaleAnimation shrinkAnim = new ScaleAnimation(1.0f, 0.95f, 1.0f, 0.95f);
+                ImageView ivReturnArrow = (ImageView) findViewById(R.id.ivReturnArrow);
+
+                shrinkAnim.setDuration(100);
+                ivReturnArrow.startAnimation(shrinkAnim);
+
+                shrinkAnim.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        onBackPressed();
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+            }
+        });
     }
 
 }
