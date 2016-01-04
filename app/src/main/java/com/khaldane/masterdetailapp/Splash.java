@@ -15,9 +15,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;import com.khaldane.masterdetailapp.GlobalClasses.EtsyService;
+import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
+import com.khaldane.masterdetailapp.GlobalClasses.EtsyService;
 
 
 public class Splash extends AppCompatActivity {
@@ -47,10 +47,14 @@ public class Splash extends AppCompatActivity {
                 activeTask = new GetActiveListings().execute();
             }
         } else {
-            Toast.makeText(this, "Please turn network connection on to view listings",
-                    Toast.LENGTH_LONG).show();
+            TextView tvLoading = (TextView) findViewById(R.id.tvLoading);
+            tvLoading.setText("PLEASE TURN NETWORK ON TO VIEW LISTINGS");
 
-            updateLoadingStatus(true, true, true);
+            ProgressBar pbLoading = (ProgressBar) findViewById(R.id.pbLoading);
+            pbLoading.setVisibility(View.GONE);
+
+            LinearLayout llLoadingBody = (LinearLayout) findViewById(R.id.llLoadingBody);
+            llLoadingBody.setGravity(Gravity.CENTER | Gravity.BOTTOM);
         }
     }
 
