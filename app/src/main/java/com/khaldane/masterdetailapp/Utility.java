@@ -1,6 +1,5 @@
 package com.khaldane.masterdetailapp;
 
-
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -15,6 +14,10 @@ import java.util.ArrayList;
 
 public class Utility {
 
+    /*
+     * Saves a string to shared preferences
+     * @params String, String, Context
+     */
     public static void saveToSharedPreferences(String key, String value ,Context c) {
         String SHARED_PREFS = "com.khaldane.masterdetailapp";
         SharedPreferences preferences = c.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
@@ -24,6 +27,10 @@ public class Utility {
         editor.apply();
     }
 
+    /*
+     * Instantiates gson builder
+     * @return Gson
+     */
     public static Gson gsonBuilder() {
         GsonBuilder builder = new GsonBuilder();
         builder.serializeNulls();
@@ -31,6 +38,11 @@ public class Utility {
         return builder.create();
     }
 
+    /*
+     * Parses a string to a ListingDetailsDisplay
+     * @params String
+     * @return ListingDetialsDisplay
+     */
     public static ListingDetailsDisplay parseListingDetails(String parse) {
         if(parse.equals("")) {
             return new ListingDetailsDisplay();
@@ -41,6 +53,11 @@ public class Utility {
         }
     }
 
+    /*
+     * Parses item results
+     * @params String
+     * @return Results
+     */
     public static Results parseResults (String parse) {
         if(parse.equals("")) {
             return new Results();
@@ -51,6 +68,11 @@ public class Utility {
         }
     }
 
+    /*
+     * Parses array to a string
+     * @params String[]
+     * @return String
+     */
     public static String parseArray (String[] arr) {
         StringBuilder builder = new StringBuilder();
             if(arr != null) {
@@ -64,6 +86,11 @@ public class Utility {
         }
     }
 
+    /*
+     * Strips nulls from a result set
+     * @params Result[]
+     * @return ArrayList<Results>
+     */
     public static ArrayList<Results> stripNulls(Results[] results) {
         ArrayList<Results> mNewResultsList = new ArrayList<>();
         for (Results r : results) {
@@ -73,4 +100,5 @@ public class Utility {
         }
         return mNewResultsList;
     }
+
 }

@@ -14,8 +14,8 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +24,7 @@ import com.khaldane.masterdetailapp.EndpointContainers.ListingDetailsDisplay;
 
 public class Splash extends AppCompatActivity {
 
-    AsyncTask featuredTask, trendingTask, activeTask;
+    private AsyncTask featuredTask, trendingTask, activeTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,6 @@ public class Splash extends AppCompatActivity {
 
             updateLoadingStatus(true, true, true);
         }
-
     }
 
     @Override
@@ -66,14 +65,12 @@ public class Splash extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
     }
 
+    /*
+     * Gets the features listings from Etsy
+     */
     class GetFeaturedListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
@@ -83,13 +80,15 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-
             updateLoadingStatus(true
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED));
         }
     }
 
+    /*
+     * Gets the trending listings from Etsy
+     */
     class GetTrendingListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
@@ -99,13 +98,15 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , activeTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , true);
         }
     }
 
+    /*
+     * Gets the active listings from Etsy
+     */
     class GetActiveListings extends AsyncTask<Void, String, ListingDetailsDisplay> {
 
         @Override
@@ -115,7 +116,6 @@ public class Splash extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-
             updateLoadingStatus(featuredTask.getStatus().equals(AsyncTask.Status.FINISHED)
                     , true
                     , trendingTask.getStatus().equals(AsyncTask.Status.FINISHED));
@@ -123,6 +123,10 @@ public class Splash extends AppCompatActivity {
         }
     }
 
+    /*
+     * Updates the loading status
+     * @return Boolean, Boolean, Boolean
+     */
     private void updateLoadingStatus(Boolean featured, Boolean trending, Boolean active) {
         if(featured && trending && active) {
             TextView tvLoading = (TextView) findViewById(R.id.tvLoading);
@@ -136,7 +140,7 @@ public class Splash extends AppCompatActivity {
 
             arrowAnimation();
 
-            RelativeLayout rlLoading = (RelativeLayout) findViewById(R.id.rlLoading);
+            LinearLayout rlLoading = (LinearLayout) findViewById(R.id.rlLoading);
             rlLoading.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,6 +151,9 @@ public class Splash extends AppCompatActivity {
         }
     }
 
+    /*
+     * Sets the arrow animation
+     */
     private void arrowAnimation() {
         final ImageView ivGetStartedArrow = (ImageView) findViewById(R.id.ivGetStartedArrow);
         final Animation slideAnimation = AnimationUtils.loadAnimation(this, R.anim.slide);
@@ -173,6 +180,11 @@ public class Splash extends AppCompatActivity {
         ivGetStartedArrow.startAnimation(slideAnimation);
     }
 
+
+    /*
+     * Checks if the user has connection to the internet
+     * @return Boolean
+     */
     private boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
                 = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -10,13 +10,11 @@
         android:layout_height="wrap_content"
         android:text="@string/no_results_found"
         android:textColor="@color/text_secondary_gray"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"/>
-
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/swipe_container"
+        android:id="@+id/scListings"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp">
@@ -26,18 +24,18 @@
             android:layout_height="wrap_content">
 
             <GridView
-                android:id="@+id/gvFeatured"
+                android:id="@+id/gvListings"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:verticalSpacing="10dp"
                 android:horizontalSpacing="10dp"
                 android:stretchMode="columnWidth"
                 android:numColumns="2"
-                android:layout_above="@+id/pbLoadingFeatures"
+                android:layout_above="@+id/pbLoadingListings"
                 />
 
             <ProgressBar
-                android:id="@+id/pbLoadingFeatures"
+                android:id="@+id/pbLoadingListings"
                 android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

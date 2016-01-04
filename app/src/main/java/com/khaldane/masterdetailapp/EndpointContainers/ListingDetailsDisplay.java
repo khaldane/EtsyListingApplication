@@ -6,12 +6,7 @@ public class ListingDetailsDisplay {
 
     ArrayList<Results> results;
 
-    public ListingDetailsDisplay() {
-    }
-
-    public ListingDetailsDisplay(ArrayList<Results> results) {
-        this.results = results;
-    }
+    public ListingDetailsDisplay() {}
 
     public ArrayList<Results> getResults() {
         return results;
@@ -20,4 +15,5 @@ public class ListingDetailsDisplay {
     public void setResults(ArrayList<Results> results) {
         this.results = results;
     }
+
 }

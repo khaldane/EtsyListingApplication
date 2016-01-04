@@ -15,16 +15,20 @@ import retrofit.RestAdapter;
 
 public class RetrofitCalls {
 
-    static final String ENDPOINT = "https://openapi.etsy.com";
+    private static final String ENDPOINT = "https://openapi.etsy.com";
 
-    static final RestAdapter adapter = new RestAdapter.Builder()
+    private static final RestAdapter adapter = new RestAdapter.Builder()
             .setLogLevel(RestAdapter.LogLevel.FULL)
             .setEndpoint(ENDPOINT)
             .build();
 
-    static final Etsy sService = adapter.create(Etsy.class);
+    private static final Etsy sService = adapter.create(Etsy.class);
 
-
+    /*
+     * Gets the featured listing from Etsy
+     * @params int, Context
+     * @return ListingDetailsDisplay
+     */
     public static ListingDetailsDisplay getFeaturedListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
         ListingDetails featured = sService.getFeaturedListings(page);
@@ -36,6 +40,11 @@ public class RetrofitCalls {
         return featuredDisplay;
     }
 
+    /*
+     * Gets the trending listings
+     * @params int, Context
+     * @return ListingDetailsDisplay
+     */
     public static ListingDetailsDisplay getTrendingListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
         ListingDetailsDisplay trendingDisplay = new ListingDetailsDisplay();
@@ -47,6 +56,11 @@ public class RetrofitCalls {
         return trendingDisplay;
     }
 
+    /*
+     * Get active listings
+     * @params int, Context
+     * @return ListingDetailsDisplay
+     */
     public static ListingDetailsDisplay getActiveListings(int page, Context c) {
         Gson gson = Utility.gsonBuilder();
         ListingDetails active = sService.getActiveListings(page);
@@ -58,6 +72,11 @@ public class RetrofitCalls {
         return activeDisplay;
     }
 
+    /*
+     * Gets search query results
+     * @params int, String
+     * @return ListingDetailsDisplay
+     */
     public static ListingDetailsDisplay getSearchQuery(int page, String query) {
         ListingDetails search = sService.getSearchQuery(page, query);
         ListingDetailsDisplay searchDisplay = new ListingDetailsDisplay();

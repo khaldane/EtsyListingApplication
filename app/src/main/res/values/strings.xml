@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MasterDetailApp</string>
+    <string name="app_name">Etsy Items</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -37,5 +37,7 @@
     <string name="view_shop">VIEW SHOP</string>
     <string name="item_name">ITEM NAME</string>
     <string name="title_activity_search">Search</string>
-    <string name="khaldane">khaldane</string>
+    <string name="etsyItems">Etsy Items</string>
+    <string name="listing_image">Listing image</string>
+    <string name="logo">khaldane logo</string>
 </resources>

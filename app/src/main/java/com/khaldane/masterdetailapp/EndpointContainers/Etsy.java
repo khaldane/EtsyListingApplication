@@ -8,7 +8,6 @@ public interface Etsy {
     //Get Featured Listings
     @GET("/v2/featured_treasuries/listings/?api_key=sifux1jmywuercksb4d8cdum&includes=MainImage")
     ListingDetails getFeaturedListings(@Query("page") int page);
-    //void getFeaturedListings(Callback<ListingDetails> response);
 
     //Get Trending Listings
     @GET("/v2/listings/trending?api_key=sifux1jmywuercksb4d8cdum&includes=MainImage")

@@ -17,9 +17,9 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
-    Context context;
-    int layoutResourceId;
-    List<Results> results;
+    private Context context;
+    private int layoutResourceId;
+    private List<Results> results;
 
     public ItemDetailArrayAdapter(Context context, int layoutResourceId, List<Results> r) {
         super(context, layoutResourceId, r);
@@ -28,6 +28,11 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
         this.results = r;
     }
 
+    /*
+     * Populates the view
+     * @params int, View, ViewGroup
+     * @return view
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
@@ -41,9 +46,7 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
             holder.price = (TextView) convertView.findViewById(R.id.tvPrice);
             convertView.setTag(holder);
         } else {
-            //View has been recycled
             holder = (ViewHolder) convertView.getTag();
-
         }
 
         final Results a = results.get(position);
@@ -56,6 +59,10 @@ public class ItemDetailArrayAdapter extends ArrayAdapter<Results> {
         return convertView;
     }
 
+    /*
+     * Repopulates/updates the gridview
+     * @params List<Results>
+     */
     public void refresh(List<Results> r) {
         this.results = r;
         notifyDataSetChanged();

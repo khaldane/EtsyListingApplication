@@ -8,60 +8,6 @@
     android:focusable="true"
     android:focusableInTouchMode="true">
 
-    <!--&lt;!&ndash; Search &ndash;&gt;-->
-    <!--<RelativeLayout-->
-        <!--android:id="@+id/llSearch"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--android:layout_marginLeft="10dp"-->
-        <!--android:layout_marginRight="10dp"-->
-        <!--android:baselineAligned="false"-->
-        <!--android:background="@color/white">-->
-
-        <!--<EditText-->
-            <!--android:id="@+id/etSearchEtsy"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:hint="@string/search_placeholder"-->
-            <!--android:textAppearance="?android:attr/textAppearanceSmall"-->
-            <!--android:background="@color/white"-->
-            <!--android:paddingLeft="55dp"-->
-            <!--android:paddingRight="0dp"-->
-            <!--android:paddingEnd="0dp"-->
-            <!--android:paddingTop="15dp"-->
-            <!--android:paddingBottom="15dp"-->
-            <!--android:maxLines="1"-->
-            <!--android:lines="1"-->
-            <!--android:singleLine="true"-->
-            <!--android:textColor="@color/text_primary_gray"-->
-            <!--android:textColorHint="@color/text_secondary_gray"-->
-            <!--android:imeOptions="actionSend" />-->
-
-        <!--<LinearLayout-->
-            <!--android:id="@+id/llSearchBtn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:paddingLeft="16dp"-->
-            <!--android:paddingRight="16dp"-->
-            <!--android:layout_alignTop="@+id/etSearchEtsy"-->
-            <!--android:layout_alignBottom="@+id/etSearchEtsy"-->
-            <!--android:layout_alignLeft="@+id/etSearchEtsy"-->
-            <!--android:layout_alignStart="@+id/etSearchEtsy">-->
-
-            <!--<ImageView-->
-                <!--android:layout_width="20dp"-->
-                <!--android:layout_height="18dp"-->
-                <!--android:padding="10dp"-->
-                <!--android:background="@drawable/search_icon_gray"-->
-                <!--android:layout_gravity="center_vertical"-->
-                <!--android:contentDescription="@string/search_icon"/>-->
-
-        <!--</LinearLayout>-->
-
-    <!--</RelativeLayout>-->
-
     <com.khaldane.masterdetailapp.SlidingTabs.TabLayout
         android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"

@@ -8,22 +8,29 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 
 public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
-    Context context;
-    String icons[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
-    int count; // Store the number of tabs, this will also be passed when the ViewPagerAdapter is created
-    String[] mFragments;
+    private Context context;
+    private String icons[];
+    private int count;
+    private String[] mFragments;
 
-    // Build a Constructor and assign the passed Values to appropriate values in the class
-    public TabViewPagerAdapter(FragmentManager fm, String[] mTitles, int mNumbOfTabsumb, Context c, String[] fragments) {
+    /*
+     * Constructor that assigns passed values to appropriate values in class
+     * @params FragmentManager, String[], int, Context, String[]
+     */
+    public TabViewPagerAdapter(FragmentManager fm, String[] mTitles, int mNumbOfTabsNumb, Context c, String[] fragments) {
         super(fm);
 
         this.icons = mTitles;
-        this.count = mNumbOfTabsumb;
+        this.count = mNumbOfTabsNumb;
         this.context = c;
         this.mFragments = fragments;
     }
 
-    //This method return the fragment for the every position in the View Pager
+    /*
+     * Instantiates the fragment for every position in view pager
+     * @params int
+     * @return Fragment
+     */
     @Override
     public Fragment getItem(int position) {
 
@@ -34,20 +41,34 @@ public class TabViewPagerAdapter extends FragmentStatePagerAdapter {
         return Fragment.instantiate(context, mFragments[position], args);
     }
 
-    // This method return the titles for the Tabs in the Tab Strip
+    /*
+     * Gets title for tabs in TabStrip
+     * @params int
+     * @return CharSequence
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         return icons[position];
     }
 
-    // This method return the Number of tabs for the tabs Strip
+    /*
+     * Gets number of tabs for TabStrip
+     * @params int
+     * @return int
+     */
     @Override
     public int getCount() {
         return count;
     }
 
+    /*
+     * Gets tab position
+     * @params Object
+     * @return int
+     */
     @Override
     public int getItemPosition(Object object) {
         return super.getItemPosition(object);
     }
+
 }

@@ -19,7 +19,7 @@ import com.khaldane.masterdetailapp.SlidingTabs.TabLayout;
 
 public class Main extends AppCompatActivity {
 
-    ViewPager pager;
+    private ViewPager pager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,18 +27,18 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Set up actionbar
-        ActionBar ab =getSupportActionBar();
-        ab.setDisplayShowTitleEnabled(false);
-        ab.setDisplayShowHomeEnabled(true);
-        ab.setIcon(R.mipmap.ic_launcher);
-        ab.setElevation(0);
+        ActionBar supportActionBar =getSupportActionBar();
+        assert getSupportActionBar() != null;
+        supportActionBar.setDisplayShowTitleEnabled(false);
+        supportActionBar.setDisplayShowHomeEnabled(true);
+        supportActionBar.setIcon(R.mipmap.ic_launcher);
+        supportActionBar.setElevation(0);
 
         populateTabs();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -47,10 +47,10 @@ public class Main extends AppCompatActivity {
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        //Listener for submitting search query
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //Go to new intent
                 Intent intent = new Intent(Main.this, Search.class);
                 intent.putExtra("query", query);
                 startActivity(intent);
@@ -71,7 +71,7 @@ public class Main extends AppCompatActivity {
         searchAutoComplete.setTextAppearance(this, android.R.style.TextAppearance_Small);
         searchAutoComplete.setTextColor(getResources().getColor(R.color.text_primary_gray));
 
-//        //Search Button
+        //Search Button
         ImageView searchIcon = (ImageView) searchView.findViewById(android.support.v7.appcompat.R.id.search_mag_icon);
         searchIcon.setImageResource(R.drawable.user);
 //
@@ -84,14 +84,11 @@ public class Main extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         return super.onOptionsItemSelected(item);
-
     }
 
-    private void populateTabs() {
 
-        //Viewpager
+    private void populateTabs() {
         TabLayout tabs;
 
         final TabViewPagerAdapter adapter;
@@ -104,26 +101,27 @@ public class Main extends AppCompatActivity {
         };
 
         String[] fragments = {
-                "com.khaldane.masterdetailapp.ItemsFragment.Featured",
-                "com.khaldane.masterdetailapp.ItemsFragment.Featured",
-                "com.khaldane.masterdetailapp.ItemsFragment.Featured"
+                "com.khaldane.masterdetailapp.ListingFragments.Listings",
+                "com.khaldane.masterdetailapp.ListingFragments.Listings",
+                "com.khaldane.masterdetailapp.ListingFragments.Listings"
         };
 
-        // Creating The ViewPagerAdapter and Passing Fragment Manager, Titles fot the Tabs and Number Of Tabs.
         adapter =  new TabViewPagerAdapter(getSupportFragmentManager(), title, 3, this, fragments);
 
-        //Assigning ViewPager View and setting the adapter
         pager.setAdapter(adapter);
-
-        //Saves the tab data to make swiping smooth
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(3); //Saves the tab data to make swiping smooth
 
         tabs.setCustomTabView(R.layout.tab_global, R.id.tabText);
         tabs.setDistributeEvenly(true); // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
-
-        // Setting the ViewPager For the SlidingTabsLayout
         tabs.setViewPager(pager);
+    }
 
+    /*
+     * Gets the viewpager item
+     * @return int
+     */
+    public int getViewPager() {
+        return pager.getCurrentItem();
     }
 
 }

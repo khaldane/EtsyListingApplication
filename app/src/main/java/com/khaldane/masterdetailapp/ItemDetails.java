@@ -27,6 +27,29 @@ public class ItemDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_details);
 
+        populateActivity();
+
+        handlers();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_details, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    /*
+     * Populates the activity
+     */
+    private void populateActivity() {
         //Get the bundle
         Bundle mBundle = getIntent().getExtras();
         String itemDetails = mBundle.getString("itemDetails", "");
@@ -77,28 +100,11 @@ public class ItemDetails extends AppCompatActivity {
         //Populate item description
         TextView tvItemDescBody = (TextView) findViewById(R.id.tvItemDescBody);
         tvItemDescBody.setText(Html.fromHtml(item.getDescription()));
-
-        handlers();
-
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_details, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        return super.onOptionsItemSelected(item);
-    }
-
+    /*
+     * Handlers
+     */
     private void handlers() {
 
         RelativeLayout rlOverviewBtn = (RelativeLayout) findViewById(R.id.rlOverviewBtn);
@@ -113,6 +119,7 @@ public class ItemDetails extends AppCompatActivity {
         final RelativeLayout rlOverview = (RelativeLayout) findViewById(R.id.rlOverview);
         final TextView tvItemDescBody = (TextView) findViewById(R.id.tvItemDescBody);
 
+        //OverView Button
         rlOverviewBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +137,7 @@ public class ItemDetails extends AppCompatActivity {
             }
         });
 
+        //Item Description Button
         rlItemDescBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,4 +156,5 @@ public class ItemDetails extends AppCompatActivity {
         });
 
     }
+
 }

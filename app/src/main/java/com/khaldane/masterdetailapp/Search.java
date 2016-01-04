@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.khaldane.masterdetailapp.ItemsFragment.Featured;
+import com.khaldane.masterdetailapp.ListingFragments.Listings;
 
 
 public class Search extends AppCompatActivity {
@@ -18,22 +18,7 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
-        //Get the bundle
-        Bundle extras = getIntent().getExtras();
-        String query = extras.getString("query", "");
-
-        //Set the new bundle
-        Bundle args = new Bundle();
-        args.putString("query", query);
-        args.putBoolean("search", true);
-
-        Fragment fragment = new Featured();
-        fragment.setArguments(args);
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.llSearch, fragment);
-        fragmentTransaction.commit();
+        instantiateSearchFragment();
     }
 
     @Override
@@ -45,11 +30,30 @@ public class Search extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         return super.onOptionsItemSelected(item);
     }
+
+    /*
+     * Sets up the search fragment
+     */
+    private void instantiateSearchFragment() {
+        //Get the bundle
+        Bundle extras = getIntent().getExtras();
+        String query = extras.getString("query", "");
+
+        //Set the new bundle
+        Bundle args = new Bundle();
+        args.putString("query", query);
+        args.putBoolean("search", true);
+
+        Fragment fragment = new Listings();
+        fragment.setArguments(args);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.llSearch, fragment);
+        fragmentTransaction.commit();
+    }
+
 }
