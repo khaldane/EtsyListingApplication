@@ -40,4 +40,6 @@
     <string name="etsyItems">Etsy Items</string>
     <string name="listing_image">Listing image</string>
     <string name="logo">khaldane logo</string>
+    <string name="scroll_up">Scroll up to refresh</string>
+    <string name="scroll_down">Scroll down to load more</string>
 </resources>
