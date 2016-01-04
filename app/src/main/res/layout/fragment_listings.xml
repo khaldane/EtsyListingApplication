@@ -10,7 +10,8 @@
         android:layout_height="wrap_content"
         android:text="@string/no_results_found"
         android:textColor="@color/text_secondary_gray"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"/>
 
     <android.support.v4.widget.SwipeRefreshLayout
         xmlns:android="http://schemas.android.com/apk/res/android"

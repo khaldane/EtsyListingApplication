@@ -233,6 +233,12 @@ public class Listings extends Fragment {
      * Get more listings
      */
     class GetSearchResults extends AsyncTask<Void, String, ListingDetailsDisplay> {
+        final ProgressBar pbLoadingListings = (ProgressBar) getView().findViewById(R.id.pbLoadingListings);
+
+        @Override
+        protected void onPreExecute() {
+            pbLoadingListings.setVisibility(View.VISIBLE);
+        }
 
         @Override
         protected ListingDetailsDisplay doInBackground(Void... params) {
@@ -245,8 +251,18 @@ public class Listings extends Fragment {
 
         @Override
         protected void onPostExecute(ListingDetailsDisplay results) {
-            listing = results;
-            populateGridView();
+            TextView tvNoResults = (TextView) getView().findViewById(R.id.tvNoResults);
+            if(results == null) {
+                tvNoResults.setVisibility(View.VISIBLE);
+                pbLoadingListings.setVisibility(View.GONE);
+            } else if(results.getResults().size() == 0) {
+                tvNoResults.setVisibility(View.VISIBLE);
+                pbLoadingListings.setVisibility(View.GONE);
+            } else {
+                listing = results;
+                pbLoadingListings.setVisibility(View.GONE);
+                populateGridView();
+            }
         }
     }
 }
