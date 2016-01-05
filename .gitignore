@@ -34,15 +34,4 @@ build
 *.iws
 *.ipr
 *~
-*.swp.gradle
-local.properties
-.idea/workspace.xml
-.idea/libraries
-.DS_Store
-build/
-gradle/
-gradle.properties
-gradlew.bat
-build.gradle
-gradlew
-settings.gradle
+*.swp
