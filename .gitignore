@@ -22,7 +22,7 @@ local.properties
 .project
   
 # Android Studio
-.idea/
+blah.idea/
 .gradle
 gradle
 /*/local.properties
