@@ -1,3 +1,12 @@
 # MasterDetailApplication
-Etsy item application that pulls featured, trending, and active listings.
-Within this app the user has the ability to view listing details, search for listings, scroll up to refresh the gridview, and infinite scrollings to view more listings.
+Built for Surfline/Wavetrek Inc. Interview Project <br>
+Timeboxed: 3 days
+
+What is it: <br>
+Item details application that pulls featured, trending, and active listings from the Etsy api.
+
+This app features:
+- Search for listings
+- View details on a listing
+- Pull to refresh data
+- Infinite scrolling
